@@ -42,3 +42,13 @@ also need my MATLAB package ExtractNameVal, which is available at
 https://github.com/milleratotago/ExtractNameVal
 
 <div class="p">
+
+[3]  Example plots
+----------------------------
+
+Demo figure 1:
+
+![fig1](https://user-images.githubusercontent.com/18093640/30787930-220c45f2-a1f0-11e7-9089-8f521597955c.jpg)
+
+Demo figure 2:
+
