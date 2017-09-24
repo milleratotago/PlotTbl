@@ -52,3 +52,29 @@ Demo figure 1:
 
 Demo figure 2:
 
+![fig2](https://user-images.githubusercontent.com/18093640/30787960-c568ad44-a1f0-11e7-89cd-0b0689b5f344.jpg)
+
+Demo figure 3:
+
+![fig3](https://user-images.githubusercontent.com/18093640/30787969-cedf75b0-a1f0-11e7-8eea-e8d416dd0823.jpg)
+
+Demo figure 4:
+
+![fig4](https://user-images.githubusercontent.com/18093640/30787968-cedf12f0-a1f0-11e7-8a2a-1364123f91bb.jpg)
+
+Demo figure 5:
+
+![fig5](https://user-images.githubusercontent.com/18093640/30787967-cedec6ba-a1f0-11e7-8434-2cd604f17d99.jpg)
+
+Demo figure 6:
+
+![fig6](https://user-images.githubusercontent.com/18093640/30787970-cedf9db0-a1f0-11e7-8988-a6c3c63e4aa2.jpg)
+
+Demo figure 7:
+
+![fig7](https://user-images.githubusercontent.com/18093640/30787966-cedea9f0-a1f0-11e7-99f1-7db57f1f0c39.jpg)
+
+Demo figure 8:
+
+![fig8](https://user-images.githubusercontent.com/18093640/30787965-cede3df8-a1f0-11e7-8813-98c15bfa26f7.jpg)
+
