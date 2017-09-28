@@ -1,4 +1,4 @@
-function PlotTbl(Tbl,varargin)
+function [subplothandles] = PlotTbl(Tbl,varargin)
 [SubplotRows, varargin] = ptMultiExtract(Tbl,'SubplotRows',1:50,varargin);  % Have many default specs so that NValues will be large for the
 [SubplotCols, varargin] = ptMultiExtract(Tbl,'SubplotCols',1:50,varargin);  % assert(Descriptor.NValues<=NSpecs,... at the end of ptMultiExtract
 [tfXlabel, varargin] = ExtractNameVali('XLabel',1:50,varargin);
@@ -7,14 +7,17 @@ function PlotTbl(Tbl,varargin)
 [YLabelStr, varargin]= ExtractNameVali('YLabelStr',{},varargin);
 [tfLegend, varargin] = ExtractNameVali('Legend',1:50,varargin);
 %[SubplotList, varargin] = ptMultiExtract(Tbl,'SubplotList',0,varargin);
+subplothandles = cell(SubplotRows.NValues,SubplotCols.NValues);
 iPlot = 0;
 for iRow=1:SubplotRows.NValues
     [Tbl4Rows, Lgd4Rows, PRsX, PRsY] = ptDescriptorInvoke(Tbl,SubplotRows,iRow);
     for iCol=1:SubplotCols.NValues
         [Tbl4Cols, Lgd4Cols, PCsX, PCsY] = ptDescriptorInvoke(Tbl4Rows,SubplotCols,iCol);
         iPlot = iPlot + 1;
-        subplot(SubplotRows.NValues,SubplotCols.NValues,iPlot);
+        subplothandles{iRow,iCol} = subplot(SubplotRows.NValues,SubplotCols.NValues,iPlot);
         varargin2 = varargin;
+
+        % Prepend names of X & Y variables to the argument list, as necessary:
         if (numel(PRsX)>0) || (numel(PCsX)>0)
             varargin2 = {[PRsX PCsX] varargin{:}};  % Only one of these should be non-blank
         end
@@ -29,7 +32,9 @@ for iRow=1:SubplotRows.NValues
         if numel(YLabelStr)>=iPlot
             MaybeLabelStrs = {MaybeLabelStrs{:} 'YLabelStr' YLabelStr{iPlot}};
         end
+
         SubplotTbl(Tbl4Cols,varargin2{:},'XLabel',ismember(iPlot,tfXlabel),'YLabel',ismember(iPlot,tfYlabel),'Legend',ismember(iPlot,tfLegend),MaybeLabelStrs{:});
+
         stitle = [Lgd4Rows Lgd4Cols];
         while ( (strfind1st(stitle,',')==1) || (strfind1st(stitle,' ')==1) )
             stitle = stitle(2:end);  % strip off leading comma/space pairs (could be several)

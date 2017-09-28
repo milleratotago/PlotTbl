@@ -1,11 +1,31 @@
 \documentclass{article}
 
-\title{PlotTbl: Plot the data stored in a table}
-\author{Jeff Miller}
+\usepackage[parfill]{parskip}  %  Include a blank line between paragraphs.
+
+\sloppy
+\pretolerance=5000
+\tolerance=5000
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+%                                          APA     My max   My min
+%                                         default    page     page
+\setlength{\footnotesep}    {   5mm}    %  5mm        5mm      5mm
+\setlength{\topmargin}      { -15mm}    %  0mm      -25mm    -15mm
+\setlength{\oddsidemargin}  {  -6mm}    %  0.25in    -6mm     -6mm
+\setlength{\evensidemargin} {  -6mm}    %  0.25in    -6mm     -6mm
+\setlength{\textwidth}      { 165mm}    %  6in      165mm    165mm
+\setlength{\textheight}     { 240mm}    %  8.5in    240mm    240mm
+\setlength{\headheight}     {   3mm}    %  ??         3mm      3mm
+\setlength{\headsep}        {  10mm}    %  ??        10mm     10mm
+\setlength{\footskip}       {  10mm}    %  ??        10mm     10mm
+
+
+\title{PlotTbl: Plot Data Stored in a Table}
+\author{Jeff Miller (miller at psy.otago.ac.nz)}
 
 \newcommand{\off}[1]{}
-\newcommand{\example}[1]{\mbox{ } \\ Example: {\it #1} \\ }
-\newcommand{\namevalue}[2]{\mbox{ } \\ Name-value pair: {\it #1 --- #2}}
+\newcommand{\example}[1]{Example: {\it #1}}
+\newcommand{\namevalue}[2]{{\it #1 --- #2}}
 %\newcommand{\backslash}{\char`\\}
 \newcommand{\caret}{\char`\^}
 
@@ -18,7 +38,7 @@
 
 \subsection{Name-value pairs for #2 control}
 
-\namevalue{#1CodeVar}{variable name}
+Name-value pair: \namevalue{#1CodeVar}{variable name}
 
 This name-value pair indicates that a different #2 should be used
 for each different value of the indicated variable.
@@ -26,27 +46,27 @@ The variable name is specified as a character vector, say sVar.
 
 \example{PlotTbl(...,'#1CodeVar','Gender')}
 
-In this example different #2s will be used to plot the data for males versus females.
+In this example different #2s will be used to plot the data for males versus females (i.e., Gender==1 versus Gender==2).
 
-\namevalue{#1XVars}{cell array of variable names}
+Name-value pair: \namevalue{#1XVars}{cell array of variable names}
 
 This name-value pair indicates that different #2s should be used to distinguish
 different variables in the table, with those variables being used as X's in the X/Y plots.
 
 \example{PlotTbl(...,'#1XVars',\{'AvgHeight' 'AvgWeight'\})}
 
-In this example different #2s will be used depending on whether the X values
-are AvgHeight or AvgWeight.
+In this example different #2s will be used to distinguish lines whose X values
+are AvgHeight versus lines whose X values are AvgWeight.
 
-\namevalue{#1YVars}{cell array of variable names}
+Name-value pair: \namevalue{#1YVars}{cell array of variable names}
 
 This name-value pair indicates that different #2s should be used to distinguish
 different variables in the table, with those variables being used as Y's in the X/Y plots.
 
 \example{PlotTbl(...,'#1YVars',\{'AvgHeight' 'AvgWeight'\})}
 
-In this example different #2s will be used depending on whether the Y values
-are AvgHeight or AvgWeight. \\
+In this example different #2s will be used to distinguish lines whose Y values
+are AvgHeight versus lines whose Y values are AvgWeight.
 
 Note: You should never specify \emph{more than one} of the three options
 #1CodeVar, #1XVars, and #1YVars.
@@ -54,9 +74,9 @@ That is, #2s can only be distinguished in one way or the other---not several.
 If you want the #2s to be distinguished in more than one way, use other
 design elements.
 
-\namevalue{#1Specs}{#3}
+Name-value pair: \namevalue{#1Specs}{#3}
 
-This name-value pair indicates that you want to replace the default set of #2
+This name-value pair indicates that you want to replace PlotTbl's default set of #2
 specifications with a new set.
 Use MATLAB's standard #2 specifications in whatever order you prefer.
 The #2s will be used in order by values of the CodeVar
@@ -66,16 +86,16 @@ or the order of the variables listed for #1XVars or #1YVars.
 
 In this example #5
 
-\namevalue{#1Legend}{cell array of legend labels}
+Name-value pair: \namevalue{#1Legend}{cell array of legend labels}
 
-This name-value pair indicates that you want to replace the default labels of the #2s
+This name-value pair indicates that you want to replace PlotTbl's default labels of the #2s
 with the new labels indicated in your cell array.
 
 \example{PlotTbl(...,'#1Legend',\{'Male' 'Female'\})}
 
 In this example the legends for the first and second #2s will be ``Male''
-and ``Female'', respectively.
-This would make sense if used in combination with the name-value pair '#1CodeVar','Gender'.
+and ``Female'', respectively, rather than the defaults of ``Gender=1'' and ``Gender=2''.
+Obviously, this option would make sense if used in combination with the name-value pair ``'#1CodeVar','Gender'''.
 
 } % end definition of \designelement
 
@@ -89,14 +109,13 @@ This would make sense if used in combination with the name-value pair '#1CodeVar
 PlotTbl is a general-purpose function for creating a figure from data stored in a table.
 It was designed to be used with tables in which some variables hold the X/Y values to be plotted and
 other variables hold numeric codes that distinguish different conditions.
-With such data, PlotTbl makes it easy to make plots showing X/Y relationships
-for each condition separately, with different conditions distinguished by being in different subplots,
-different line types (e.g., solid/dashed), different marker types, different colors, etc.
-Some options are provided for control over titles, X and Y axis labels, legends, etc.
+With such data, PlotTbl makes it easy to plot X/Y relationships for each condition
+separately, with different conditions distinguished by
+different line types (e.g., solid/dashed), marker types, colors, subplots, etc.
+Many options are provided for control over titles, X and Y axis labels, legends, etc.
 
-The screenshots on GitHub show an example data table and a set of figures produced
-from it by PlotTbl.
-All but one of the figures---the last one---were produced by a single PlotTbl function call.
+Screenshots in the README.md file on GitHub show a set of example figures produced with a data table.
+All but one of the figures were produced by a single PlotTbl function call.
 
 Users needing even more fine-grained control over individual subplots can call the
 function SubplotTbl, which plots only one subplot within a subplot-type figure.
@@ -104,7 +123,7 @@ function SubplotTbl, which plots only one subplot within a subplot-type figure.
 \section{Requirements}
 
 You need a version of MATLAB that supports the ``table'' data type.
-You also need my MATLAB package ExtractNameVal, which is available here: \\
+You also need my MATLAB package ExtractNameVal available at
 https://github.com/milleratotago/ExtractNameVal
 
 
@@ -123,7 +142,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see http://www.gnu.org/licenses/ 
 
 \section{Syntax}
 
@@ -138,48 +157,67 @@ PlotTbl is called with one of these four basic parameter configurations:
 Tbl is the data table containing the data to be plotted.
 
 sX and sY are strings indicating the names of the X and Y variables to be plotted.
-These parameters \emph{must} be omitted when the variable names are specified by name-value pairs
-(see XVars and YVars below).
+In some cases the X and/or Y variable names are specified by name-value pairs (see various
+option names ending in XVars
+and YVars below), and in these cases the sX and/or sY parameters \emph{must} be omitted.
 
 Name,Value represents a series of name-value pair arguments.
 
 \section{Examples}
 
 Suppose that you have a table AHWDat containing the average heights and weights of male
-and female children of three different nationalities in six different age groups (see PlotTblDemo.m).
+and female children of three different nationalities in six different age groups (see Demo.m).
+Here is the format of the table (the heights and weights are not intended to be realistic):
+
+\begin{tabular}{cccccc}
+Age & Gender & Nationality & AvgHeight & AvgWeight \\
+  2 &    1   &       1     &    114    &   66  \\
+  2 &    1   &       2     &    116    &   64  \\
+  2 &    1   &       3     &    111    &   68  \\
+  2 &    2   &       1     &    125    &   73  \\
+  2 &    2   &       2     &    124    &   75  \\
+  2 &    2   &       3     &    122    &   75  \\
+  4 &    1   &       1     &    117    &   72  \\
+  4 &    1   &       2     &    118    &   72  \\
+... &    ... &      ...    &    ...    &  ...  \\
+\end{tabular}
+
 AHWDat.Gender is 1/2 to code male/female, and AHWDat.Nationality is 1/2/3 to code three nationalities
 (e.g., Germany, France, Spain), and AHWDat.Age holds the ages (2, 4, 6, 8, 10, 12).
 The variables AHWDat.AvgWeight, and AHWDat.AvgHeight hold the average
 weights and heights of the children of each gender, nationality, and age group.
 %Age   Gender   Nationality  AvgHeight   AvgWeight
 
-\example{PlotTbl(AHWDat,'Age','AvgWeight','SubplotRowsCodeVar',... \\
-'Gender','SubplotColsCodeVar','Nationality')}
+\example{PlotTbl(AHWDat,'Age','AvgWeight','SubplotRowsCodeVar','Gender','SubplotColsCodeVar','Nationality')}
 
-This command produces a plot with six subplots (2 rows x 3 columns).
+This command produces a figure with six subplots (2 rows x 3 columns).
 The two rows of subplots correspond to genders 1 and 2,
-and the three columns correspond to the three nationalities.
+and the three columns of subplots correspond to the three nationalities.
 Each plot has Age on the X axis and AvgWeight on the Y axis.
 
 \example{PlotTbl(AHWDat,'Age','SubplotRowsYVars',\{'AvgWeight','AvgHeight'\},... \\
 'SubplotColsCodeVar','Nationality','LineTypeCodeVar','Gender')}
 
-This command produces a 6-subplot plot with plots of AvgWeight versus Age in the top row and
-AvgHeight versus Age in the bottom row.  The three nationalities are the three columns.
+This command produces a figure with 6 subplots of AvgWeight versus Age in the top row and
+AvgHeight versus Age in the bottom row.  The three nationalities are the three columns of subplots.
 There are two lines per subplot---one for each Gender---with the lines distinguished by
 line type (i.e., solid, dashed).
 
 \example{PlotTbl(AHWDat,'Age','SubplotRowsYVars',\{'AvgWeight','AvgHeight'\},... \\
-'SubplotColsCodeVar','Nationality','LineTypeCodeVar','Gender',... \\
-'LineTypeLegend',\{'Male','Female'\})}
+'SubplotColsCodeVar','Nationality','LineTypeCodeVar','Gender','LineTypeLegend',\{'Male','Female'\})}
 
-This command produces the same plot as the previous one except that the two Gender values are called Male and Female in the legend.
+This command produces the same plot as the previous one except that the two Gender values are specified
+as ``Male'' and ``Female'' in the legend.
 
 For more examples, see Demo.m.
 
-\section{Name-value pairs for design-element control}
+\section{Name-value Pairs for Design Element Control}
 
-There are seven similar sets of name-value pair options to control the organization of
+It is convenient to consider the name-value pairs as falling into three groups: design element control,
+axis control, and legend control.
+The largest and most important group provides design element control.
+
+There are seven sets of name-value pair options to control the organization of
 the figure in terms of its design elements, namely:
 \begin{itemize}
 \item line types, such as solid versus dotted (LineType)
@@ -190,6 +228,7 @@ the figure in terms of its design elements, namely:
 \item subplot rows (SubplotRows)
 \item subplot columns (SubplotCols)
 \end{itemize}
+All seven are controlled with basically the same set of options.
 
 %These are explained separately, but the most detail is provided for the
 %first (i.e., line type control).
@@ -199,11 +238,9 @@ the figure in terms of its design elements, namely:
 \designelement{LineType}{line type}{cell array of line type specifications}
 {\{':' '-.'\}}{the first line will be dotted and the second line will be dash/dot.}
 
-\mbox{ } \\
 Note: Name-value pairs analogous to LineTypeCodeVar, LineTypeXVars, LineTypeYVars,
 LineTypeSpecs, and LineTypeLegend, are available for controlling marker types, colors,
-line widths, and marker sizes, as described next.
-There are also very similar options for controlling subplots.
+line widths, marker sizes, and subplots as described in the following subsections.
 
 \designelement{MarkerType}{marker type}{string list of marker type specifications}
 {'so*'}{the first marker will be the square, the second will be the circle, and the third will be the asterisk.}
@@ -214,31 +251,33 @@ There are also very similar options for controlling subplots.
 \designelement{LineWidth}{line width}{vector of line widths}
 {[3 5 8 12]}{the first line will have width 3, the next width 5, etc.}
 
-\designelement{MarkerSize}{marker sizes}{vector of marker sizes}
+\designelement{MarkerSize}{marker size}{vector of marker sizes}
 {[7 10]}{the first marker will have size 7 and the second will have size 10.}
 
 \subsection{Name-value pairs for subplot row and column control}
 
-\namevalue{SubplotRowsCodeVar}{variable name}
-\namevalue{SubplotColsCodeVar}{variable name}
+Name-value pair: \namevalue{SubplotRowsCodeVar}{variable name} \\
+Name-value pair: \namevalue{SubplotColsCodeVar}{variable name}
 
-Each of these two name-value pairs indicates that a different subplot row or column
-should be used for each different value of the indicated variable.
+Each of these two name-value pairs indicates that a different subplot row or subplot
+column should be used for each different value of the indicated variable.
 The variable name is specified as a character vector, say sVar.
 
 \example{PlotTbl(...,'SubplotRowsCodeVar','Gender')}
 
 This name-value pair indicates that the data for males and females should be plotted in two
 different rows of subplots.
+The figure might have just one column, or there might be several columns distinguished by the
+values of some other variable or by the variable plotted on the X or Y axis.
 
-\namevalue{SubplotRowsXVars}{cell array of variable names}
-\namevalue{SubplotColsXVars}{cell array of variable names}
+Name-value pair: \namevalue{SubplotRowsXVars}{cell array of variable names} \\
+Name-value pair: \namevalue{SubplotColsXVars}{cell array of variable names}
 
 Each of these two name-value pairs indicates that a different subplot row or column should
 be used for X/Y plots with each of the indicated variable names on the X axis.
 
-\namevalue{SubplotRowsYVars}{cell array of variable names}
-\namevalue{SubplotColsYVars}{cell array of variable names}
+Name-value pair: \namevalue{SubplotRowsYVars}{cell array of variable names} \\
+Name-value pair: \namevalue{SubplotColsYVars}{cell array of variable names}
 
 Each of these two name-value pairs indicates that a different subplot row or column should
 be used for X/Y plots with each of the indicated variable names on the Y axis.
@@ -247,16 +286,16 @@ Note: You should never specify \emph{more than one} of the three options
 SubplotRowsCodeVar, SubplotRowsXVars, and SubplotRowsYVars,
 and never more than one of the three corresponding SubplotCols options.
 But you can specify both SubplotRows and SubplotCols in any
-combination that you want, since these are independent ``design elements''
-of the display (in the same sense that the line type and color are independent).
+combination that you want---that is, these ``design elements''
+can be controlled independently.
 
 %\namevalue{SubplotRowsSpecs}{unused}
 %\namevalue{SubplotColsSpecs}{unused}
-Note: Extrapolating from the previous options, you might expect there to be
-SubplotRowsSpecs and SubplotColsSpecs options, but these do not exist.
+%Note: Extrapolating from the previous options, you might expect there to be
+%SubplotRowsSpecs and SubplotColsSpecs options, but these do not exist.
 
-\namevalue{SubplotRowsLegend}{cell array of legend labels}
-\namevalue{SubplotColsLegend}{cell array of legend labels}
+Name-value pair: \namevalue{SubplotRowsLegend}{cell array of legend labels} \\
+Name-value pair: \namevalue{SubplotColsLegend}{cell array of legend labels}
 
 Each of these two name-value pairs indicates that you want to replace the default labels
 of these subplots with the new labels indicated in your cell array.
@@ -264,127 +303,152 @@ of these subplots with the new labels indicated in your cell array.
 the tops of the subplots.)
 
 \example{PlotTbl(...,'SubplotRowsLegend',\{'Male' 'Female'\})}
-This name-value pair indicates that you want the first subplot to be labelled Male
-and the second to be labelled Female.
+
+In this example the first subplot will be labelled ``Male''
+and the second will be labelled ``Female'', rather than the defaults of ``Gender=1'' and ``Gender=2''.
 This would make sense in combination with the option
 \example{PlotTbl(...,'SubplotRowsCodeVar','Gender')}
 
-\section{Name-value pairs for control of axis labels}
+\section{Name-value Pairs for Control of Axis Labels}
 
-\namevalue{XLabel}{vector of subplot numbers}
-\namevalue{YLabel}{vector of subplot numbers}
-The length of the cell array is the number of subplots.
+Name-value pair: \namevalue{XLabel}{vector of subplot numbers} \\
+Name-value pair: \namevalue{YLabel}{vector of subplot numbers}
 
-\example{PlotTbl(...,'XLabel',[7 8 9],'YLabel',[1 4 7)}
-With a 3x3 arrangement of subplots, this would label the X axes
-of the plots in the bottom row and it would label the Y axes of
-the subplots in the left-most column.
+Each of these two name-value pairs indicates that you want an X or Y axis label to appear
+on the subplot corresponding to one of the numbers in the vector.
+By default, all axes are labelled; this option is used when you want to turn off
+some of the labels.
+The subplots are numbered using the standard numbering scheme for MATLAB's subplot command.
 
-\namevalue{XLabelStr}{cell array of X labels for the subplots}
-\namevalue{YLabelStr}{cell array of Y labels for the subplots}
-These options specify the X and Y axis labels for the subplots, which can be used to
-override the defaults (i.e., the X and Y variable names).
-These are essential when the desired axis label is not a legal MATLAB variable name.
-The length of the cell array is the number of subplots.
+\example{PlotTbl(...,'XLabel',[7 8 9],'YLabel',[1 4 7])}
 
-\example{PlotTbl(...,'XLabelStr',\{'\textbackslash alpha' '\textbackslash alpha' '\textbackslash alpha' '\textbackslash alpha'\}}
-This indicates that the X axes of all four subplots should be labelled $\alpha$.
+In this example, with a 3x3 arrangement of subplots, the X axes will
+be labelled for the plots in the bottom row (i.e., subplot numbers 7-9) and the Y axes
+will be labelled for the subplots in the left-most column (i.e., subplot numbers 1, 4, and 7).
 
-\section{Name-value pairs for control of legends}
+Name-value pair: \namevalue{XLabelStr}{cell array of X labels for the subplots} \\
+Name-value pair: \namevalue{YLabelStr}{cell array of Y labels for the subplots}
 
-\namevalue{Legend}{vector of subplot numbers}
-A list of the numbers of the subplots on which legends should be displayed.
+Each of these two name-value pairs allows you to specify the text of the X and Y axis labels for the
+subplots, which can be used to override the defaults (i.e., the X and Y variable names).
+This capability is needed when the desired axis label is not a legal MATLAB variable name.
+The length of the cell array is the number of subplots (i.e., you must specify
+one X or Y axis label for each subplot).
 
-\example{PlotTbl(...,'Legend',[1:3]}
+\example{PlotTbl(...,'XLabelStr',\{'\textbackslash alpha' '\textbackslash alpha' '\textbackslash alpha' '\textbackslash alpha'\})}
 
-This indicates that legends should be displayed in the first three subplots.
+In this example the X axes of all four subplots will be labelled $\alpha$.
 
-\namevalue{LegendLoc}{string}
+\section{Name-value Pairs for Control of Legends}
 
-\namevalue{LegendPos}{[left bottom width height]}
+Name-value pair: \namevalue{Legend}{vector of subplot numbers}
 
-\namevalue{LegendBox}{true or false}
+This name-value pair provides a list of numbers of the subplots for which you want the legends to be displayed.
+
+\example{PlotTbl(...,'Legend',[1 3])}
+
+In this example legends will be displayed on the first and third subplots.
+
+Name-value pair: \namevalue{LegendLoc}{string}
+
+This name-value pair can be used to override MATLAB's default choice of where to
+put the legend(s) on the plot(s).
+Use MATLAB's standard location specifications (e.g., 'Northeast', 'Best')
+to indicate where you want the legend(s).
+
+Name-value pair: \namevalue{LegendPos}{vector of four position numbers}
+
+Alternatively, this name-value pair can be used to override MATLAB's default choice of where to
+put the legend(s) on the plot(s).
+The option indicates that the legend(s) should be placed in the custom position
+indicated by the four numerical values in the vector (i.e., left bottom width height).
+Use MATLAB's standard position specification, determined by its units
+(e.g., see https://www.mathworks.com/matlabcentral/answers/ 80980-what-does-the-four-vector-mean-in-matlab-legend-position ).
+
+Note: To override the default legen positioning, you can specify LegendLoc or LegendPos, but not both.
+
+Name-value pair: \namevalue{LegendBox}{'boxon' or 'boxoff'}
 
 This name-value pair indicates whether you want the box on the legend(s).
-I think they just add clutter, so the default is false.
+I think boxes just add clutter, so the default is 'boxoff'.
 
 \section{Tips}
 
 \begin{itemize}
 
-\item PlotTbl plots the data from all of the rows in your table.
-If you just want to plot some of the rows, just pass it a subset
-of the table using MATLAB's standard row-selection methods.
-In the following example, data are just plotted for the females.
+\item PlotTbl plots the data from all of the rows in whatever table
+is passed to it.
+If you just want to plot some of the rows of a given table, just pass
+the desired row subset using MATLAB's standard row-selection methods.
 
 \example{PlotTbl(AHWDat(AHWDat.Gender==2,:),'Age','AvgWeight','LineTypeCodeVar','Nationality');} 
 
+In this example, data are just plotted for Gender 2.
 
-\item For any design-element that does \emph{not} vary across your plots,
+\item For any design element that does \emph{not} vary across your plots,
 PlotTbl uses the first of the default ``Specs'' options for that design element.
 If you would prefer something else, you can change this just by setting the Specs
 for that design element, even though you are not using it to distinguish between lines.
+You can include the Specs option for any design element, whether that element appears
+anywhere else in the PlotTbl command or not.
 
-For example, the square is the first of the default MarkerTypeSpecs, so all of the lines
-will be drawn with square markers if you do not specify anything related to MarkerType
-(i.e., MarkerTypeCodeVar, MarkerTypeXVars, or MarkerTypeYVars).
-Perhaps you would prefer lines with no markers at all (e.g., if the points are closely
-spaced along the X axis so that the markers smash together)?
-In that case, include the option {\it PlotTbl(...,'MarkerTypeSpecs',' ',...) }
-so that the first (and only) element of MarkerTypeSpecs is the space,
-which asks for no marker at all.
-You can always include the Specs option for any design element,
-whether that element appears anywhere else in the PlotTbl command or not.
+\example{PlotTbl(...,'MarkerTypeSpecs',' ',...);} 
+
+In this example, all lines will be drawn without markers (as indicated by the blank marker type specification).
+By default, PlotTbl's first MarkerTypeSpec is the square, so the lines would be drawn with square
+markers if this option were not specified.
 
 \end{itemize}
 
 \appendix
 
-\section{Appendix: A complete list of name-value pairs}
+% \clearpage
 
-\namevalue{ColorCodeVar}{variable name}
-\namevalue{ColorLegend}{cell array of legend labels}
-\namevalue{ColorSpecs}{string list of colors}
-\namevalue{ColorXVars}{cell array of variable names}
-\namevalue{ColorYVars}{cell array of variable names}
-\namevalue{Legend}{vector of subplot numbers}
-\namevalue{LegendBox}{true or false}
-\namevalue{LegendLoc}{}
-\namevalue{LegendPos}{[left bottom width height]}
-\namevalue{LineTypeCodeVar}{variable name}
-\namevalue{LineTypeLegend}{cell array of legend labels}
-\namevalue{LineTypeSpecs}{cell array of line type specifications}
-\namevalue{LineTypeXVars}{cell array of variable names}
-\namevalue{LineTypeYVars}{cell array of variable names}
-\namevalue{LineWidthCodeVar}{variable name}
-\namevalue{LineWidthLegend}{cell array of legend labels}
-\namevalue{LineWidthSpecs}{vector of line widths}
-\namevalue{LineWidthXVars}{cell array of variable names}
-\namevalue{LineWidthYVars}{cell array of variable names}
-\namevalue{MarkerSizeCodeVar}{variable name}
-\namevalue{MarkerSizeLegend}{cell array of legend labels}
-\namevalue{MarkerSizeSpecs}{vector of marker sizes}
-\namevalue{MarkerSizeXVars}{cell array of variable names}
-\namevalue{MarkerSizeYVars}{cell array of variable names}
-\namevalue{MarkerTypeCodeVar}{variable name}
-\namevalue{MarkerTypeLegend}{cell array of legend labels}
-\namevalue{MarkerTypeSpecs}{string list of marker type specifications}
-\namevalue{MarkerTypeXVars}{cell array of variable names}
-\namevalue{MarkerTypeYVars}{cell array of variable names}
-\namevalue{SubplotColsCodeVar}{variable name}
-\namevalue{SubplotColsLegend}{cell array of legend labels}
-\namevalue{SubplotColsXVars}{cell array of variable names}
-\namevalue{SubplotColsYVars}{cell array of variable names}
-\namevalue{SubplotRowsCodeVar}{variable name}
-\namevalue{SubplotRowsLegend}{cell array of legend labels}
-\namevalue{SubplotRowsXVars}{cell array of variable names}
-\namevalue{SubplotRowsYVars}{cell array of variable names}
-\namevalue{XLabel}{vector of subplot numbers}
-\namevalue{XLabelStr}{vector of subplot numbers}
-\namevalue{YLabel}{vector of subplot numbers}
+\section{Appendix: Complete List of Name-value Pairs}
+
+\namevalue{ColorCodeVar}{variable name} \\
+\namevalue{ColorLegend}{cell array of legend labels} \\
+\namevalue{ColorSpecs}{string list of colors} \\
+\namevalue{ColorXVars}{cell array of variable names} \\
+\namevalue{ColorYVars}{cell array of variable names} \\
+\namevalue{Legend}{vector of subplot numbers where you want the legend} \\
+\namevalue{LegendBox}{'boxon' or 'boxoff'} \\
+\namevalue{LegendLoc}{string such as 'Northeast'} \\
+\namevalue{LegendPos}{[left bottom width height]} \\
+\namevalue{LineTypeCodeVar}{variable name} \\
+\namevalue{LineTypeLegend}{cell array of legend labels} \\
+\namevalue{LineTypeSpecs}{cell array of line type specifications} \\
+\namevalue{LineTypeXVars}{cell array of variable names} \\
+\namevalue{LineTypeYVars}{cell array of variable names} \\
+\namevalue{LineWidthCodeVar}{variable name} \\
+\namevalue{LineWidthLegend}{cell array of legend labels} \\
+\namevalue{LineWidthSpecs}{vector of line widths} \\
+\namevalue{LineWidthXVars}{cell array of variable names} \\
+\namevalue{LineWidthYVars}{cell array of variable names} \\
+\namevalue{MarkerSizeCodeVar}{variable name} \\
+\namevalue{MarkerSizeLegend}{cell array of legend labels} \\
+\namevalue{MarkerSizeSpecs}{vector of marker sizes} \\
+\namevalue{MarkerSizeXVars}{cell array of variable names} \\
+\namevalue{MarkerSizeYVars}{cell array of variable names} \\
+\namevalue{MarkerTypeCodeVar}{variable name} \\
+\namevalue{MarkerTypeLegend}{cell array of legend labels} \\
+\namevalue{MarkerTypeSpecs}{string list of marker type specifications} \\
+\namevalue{MarkerTypeXVars}{cell array of variable names} \\
+\namevalue{MarkerTypeYVars}{cell array of variable names} \\
+\namevalue{SubplotColsCodeVar}{variable name} \\
+\namevalue{SubplotColsLegend}{cell array of legend labels} \\
+\namevalue{SubplotColsXVars}{cell array of variable names} \\
+\namevalue{SubplotColsYVars}{cell array of variable names} \\
+\namevalue{SubplotRowsCodeVar}{variable name} \\
+\namevalue{SubplotRowsLegend}{cell array of legend labels} \\
+\namevalue{SubplotRowsXVars}{cell array of variable names} \\
+\namevalue{SubplotRowsYVars}{cell array of variable names} \\
+\namevalue{XLabel}{vector of subplot numbers} \\
+\namevalue{XLabelStr}{vector of subplot numbers} \\
+\namevalue{YLabel}{vector of subplot numbers} \\
 \namevalue{YLabelStr}{vector of subplot numbers}
 
-\section{Appendix: Line types in MATLAB}
+\section{Appendix: Line Types in MATLAB}
 
 In PlotTbl's default order:
 
@@ -395,7 +459,7 @@ In PlotTbl's default order:
 \item '-.': Dash-dot line
 \end{itemize}
 
-\section{Appendix: Marker types in MATLAB}
+\section{Appendix: Marker Types in MATLAB}
 
 In PlotTbl's default order:
 
