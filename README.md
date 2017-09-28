@@ -1,7 +1,7 @@
 # PlotTbl
 MATLAB function for plotting data in table
 
-[1]  Overview
+[1]  Overview
 ------------------------
 
 <div class="p">
@@ -30,24 +30,21 @@ subplot-type figure.
 
 </div>
 
-[2]  Requirements
+[2]  Requirements
 ----------------------------
 
 <div class="p">
 
 </div>
 
-You need a version of MATLAB that supports the �table� data type. You
+You need a version of MATLAB that supports the “table” data type. You
 also need my MATLAB package ExtractNameVal, which is available at
 https://github.com/milleratotago/ExtractNameVal
 
 <div class="p">
 
-
-[3]  Example plots
+[3]  Example plots
 ----------------------------
-
-Except as noted otherwise, each of these plots was made with a single PlotTbl call.
 
 Demo figure 1:
 
@@ -77,6 +74,7 @@ Demo figure 7:
 
 ![fig7](https://user-images.githubusercontent.com/18093640/30787966-cedea9f0-a1f0-11e7-99f1-7db57f1f0c39.jpg)
 
-Demo figure 8 (made with 2 SubplotTbl calls):
+Demo figure 8:
 
 ![fig8](https://user-images.githubusercontent.com/18093640/30787965-cede3df8-a1f0-11e7-8813-98c15bfa26f7.jpg)
+
