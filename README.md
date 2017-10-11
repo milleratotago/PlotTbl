@@ -37,8 +37,8 @@ subplot-type figure.
 
 </div>
 
-You need a version of MATLAB that supports the “table” data type. You
-also need my MATLAB package ExtractNameVal, which is available at
+You need a version of MATLAB that supports the “table” data type (R2013b or newer).
+You also need my MATLAB package ExtractNameVal, which is available at
 https://github.com/milleratotago/ExtractNameVal
 
 <div class="p">

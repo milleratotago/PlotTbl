@@ -22,8 +22,8 @@ subplot-type figure.
 Requirements
 ============
 
-You need a version of MATLAB that supports the “table” data type. You
-also need my MATLAB package ExtractNameVal available at
+You need a version of MATLAB that supports the “table” data type (R2013b
+or newer). You also need my MATLAB package ExtractNameVal available at
 https://github.com/milleratotago/ExtractNameVal
 
 License
@@ -150,7 +150,9 @@ All seven are controlled with basically the same set of options.
 Name-value pairs for line type control
 --------------------------------------
 
-Name-value pair: *LineTypeCodeVar — variable name*
+Name-value pair: *LineTypeCodeVar — variable name* (or
+equivalently)\
+Name-value pair: *LineType — variable name*
 
 This name-value pair indicates that a different line type should be used
 for each different value of the indicated variable. The variable name is
@@ -162,6 +164,8 @@ In this example different line types will be used to plot the data for
 males versus females (i.e., Gender==1 versus Gender==2).
 
 Name-value pair: *LineTypeXVars — cell array of variable names*
+(or equivalently)\
+Name-value pair: *LineTypeX — cell array of variable names*
 
 This name-value pair indicates that different line types should be used
 to distinguish different variables in the table, with those variables
@@ -173,6 +177,8 @@ In this example different line types will be used to distinguish lines
 whose X values are AvgHeight versus lines whose X values are AvgWeight.
 
 Name-value pair: *LineTypeYVars — cell array of variable names*
+(or equivalently)\
+Name-value pair: *LineTypeY — cell array of variable names*
 
 This name-value pair indicates that different line types should be used
 to distinguish different variables in the table, with those variables
@@ -203,11 +209,29 @@ Example: *PlotTbl(…,’LineTypeSpecs’,{’:’ ’-.’})*
 In this example the first line will be dotted and the second line will
 be dash/dot.
 
+Name-value pair: *LineTypeOrder — ’stable’ or ’sorted’*
+
+This name-value pair is only applicable when used in conjunction with
+the ’LineTypeCodeVar’ pair. It indicates whether you want PlotTbl to
+assign the different values of the indicated code variable to the
+different line types in the order in which they appear in the table
+(i.e., ’stable’, which is the default) or whether you want them assigned
+in sorted numerical order.
+
+Example: *PlotTbl(…,’LineTypeOrder’,’sorted’)*
+
+In this example the values of the indicated code variable will be
+assigned to line types in numerical order, regardless of the order in
+which they appear in the table.
+
 Name-value pair: *LineTypeLegend — cell array of legend labels*
 
 This name-value pair indicates that you want to replace PlotTbl’s
 default labels of the line types with the new labels indicated in your
-cell array.
+cell array. The order of the legend labels in the cell array should
+correspond to the order in which the different values of the indicated
+variable are assigned to the different line types, as determined by the
+LineTypeOrder name-value pair.
 
 Example: *PlotTbl(…,’LineTypeLegend’,{’Male’ ’Female’})*
 
@@ -225,7 +249,9 @@ subplots as described in the following subsections.
 Name-value pairs for marker type control
 ----------------------------------------
 
-Name-value pair: *MarkerTypeCodeVar — variable name*
+Name-value pair: *MarkerTypeCodeVar — variable name* (or
+equivalently)\
+Name-value pair: *MarkerType — variable name*
 
 This name-value pair indicates that a different marker type should be
 used for each different value of the indicated variable. The variable
@@ -237,7 +263,8 @@ In this example different marker types will be used to plot the data for
 males versus females (i.e., Gender==1 versus Gender==2).
 
 Name-value pair: *MarkerTypeXVars — cell array of variable
-names*
+names* (or equivalently)\
+Name-value pair: *MarkerTypeX — cell array of variable names*
 
 This name-value pair indicates that different marker types should be
 used to distinguish different variables in the table, with those
@@ -250,7 +277,8 @@ In this example different marker types will be used to distinguish lines
 whose X values are AvgHeight versus lines whose X values are AvgWeight.
 
 Name-value pair: *MarkerTypeYVars — cell array of variable
-names*
+names* (or equivalently)\
+Name-value pair: *MarkerTypeY — cell array of variable names*
 
 This name-value pair indicates that different marker types should be
 used to distinguish different variables in the table, with those
@@ -282,12 +310,30 @@ Example: *PlotTbl(…,’MarkerTypeSpecs’,’so\*’)*
 In this example the first marker will be the square, the second will be
 the circle, and the third will be the asterisk.
 
+Name-value pair: *MarkerTypeOrder — ’stable’ or ’sorted’*
+
+This name-value pair is only applicable when used in conjunction with
+the ’MarkerTypeCodeVar’ pair. It indicates whether you want PlotTbl to
+assign the different values of the indicated code variable to the
+different marker types in the order in which they appear in the table
+(i.e., ’stable’, which is the default) or whether you want them assigned
+in sorted numerical order.
+
+Example: *PlotTbl(…,’MarkerTypeOrder’,’sorted’)*
+
+In this example the values of the indicated code variable will be
+assigned to marker types in numerical order, regardless of the order in
+which they appear in the table.
+
 Name-value pair: *MarkerTypeLegend — cell array of legend
 labels*
 
 This name-value pair indicates that you want to replace PlotTbl’s
 default labels of the marker types with the new labels indicated in your
-cell array.
+cell array. The order of the legend labels in the cell array should
+correspond to the order in which the different values of the indicated
+variable are assigned to the different marker types, as determined by
+the MarkerTypeOrder name-value pair.
 
 Example: *PlotTbl(…,’MarkerTypeLegend’,{’Male’ ’Female’})*
 
@@ -300,7 +346,9 @@ used in combination with the name-value pair
 Name-value pairs for color control
 ----------------------------------
 
-Name-value pair: *ColorCodeVar — variable name*
+Name-value pair: *ColorCodeVar — variable name* (or
+equivalently)\
+Name-value pair: *Color — variable name*
 
 This name-value pair indicates that a different color should be used for
 each different value of the indicated variable. The variable name is
@@ -311,7 +359,9 @@ Example: *PlotTbl(…,’ColorCodeVar’,’Gender’)*
 In this example different colors will be used to plot the data for males
 versus females (i.e., Gender==1 versus Gender==2).
 
-Name-value pair: *ColorXVars — cell array of variable names*
+Name-value pair: *ColorXVars — cell array of variable names* (or
+equivalently)\
+Name-value pair: *ColorX — cell array of variable names*
 
 This name-value pair indicates that different colors should be used to
 distinguish different variables in the table, with those variables being
@@ -322,7 +372,9 @@ Example: *PlotTbl(…,’ColorXVars’,{’AvgHeight’ ’AvgWeight’})*
 In this example different colors will be used to distinguish lines whose
 X values are AvgHeight versus lines whose X values are AvgWeight.
 
-Name-value pair: *ColorYVars — cell array of variable names*
+Name-value pair: *ColorYVars — cell array of variable names* (or
+equivalently)\
+Name-value pair: *ColorY — cell array of variable names*
 
 This name-value pair indicates that different colors should be used to
 distinguish different variables in the table, with those variables being
@@ -353,11 +405,29 @@ Example: *PlotTbl(…,’ColorSpecs’,’rgbk’)*
 In this example the first line will be red, the second green, the third
 blue, and the fourth black.
 
+Name-value pair: *ColorOrder — ’stable’ or ’sorted’*
+
+This name-value pair is only applicable when used in conjunction with
+the ’ColorCodeVar’ pair. It indicates whether you want PlotTbl to assign
+the different values of the indicated code variable to the different
+colors in the order in which they appear in the table (i.e., ’stable’,
+which is the default) or whether you want them assigned in sorted
+numerical order.
+
+Example: *PlotTbl(…,’ColorOrder’,’sorted’)*
+
+In this example the values of the indicated code variable will be
+assigned to colors in numerical order, regardless of the order in which
+they appear in the table.
+
 Name-value pair: *ColorLegend — cell array of legend labels*
 
 This name-value pair indicates that you want to replace PlotTbl’s
 default labels of the colors with the new labels indicated in your cell
-array.
+array. The order of the legend labels in the cell array should
+correspond to the order in which the different values of the indicated
+variable are assigned to the different colors, as determined by the
+ColorOrder name-value pair.
 
 Example: *PlotTbl(…,’ColorLegend’,{’Male’ ’Female’})*
 
@@ -369,7 +439,9 @@ used in combination with the name-value pair “’ColorCodeVar’,’Gender”�
 Name-value pairs for line width control
 ---------------------------------------
 
-Name-value pair: *LineWidthCodeVar — variable name*
+Name-value pair: *LineWidthCodeVar — variable name* (or
+equivalently)\
+Name-value pair: *LineWidth — variable name*
 
 This name-value pair indicates that a different line width should be
 used for each different value of the indicated variable. The variable
@@ -381,6 +453,8 @@ In this example different line widths will be used to plot the data for
 males versus females (i.e., Gender==1 versus Gender==2).
 
 Name-value pair: *LineWidthXVars — cell array of variable names*
+(or equivalently)\
+Name-value pair: *LineWidthX — cell array of variable names*
 
 This name-value pair indicates that different line widths should be used
 to distinguish different variables in the table, with those variables
@@ -392,6 +466,8 @@ In this example different line widths will be used to distinguish lines
 whose X values are AvgHeight versus lines whose X values are AvgWeight.
 
 Name-value pair: *LineWidthYVars — cell array of variable names*
+(or equivalently)\
+Name-value pair: *LineWidthY — cell array of variable names*
 
 This name-value pair indicates that different line widths should be used
 to distinguish different variables in the table, with those variables
@@ -420,11 +496,29 @@ Example: *PlotTbl(…,’LineWidthSpecs’,\3 5 8 12\)*
 
 In this example the first line will have width 3, the next width 5, etc.
 
+Name-value pair: *LineWidthOrder — ’stable’ or ’sorted’*
+
+This name-value pair is only applicable when used in conjunction with
+the ’LineWidthCodeVar’ pair. It indicates whether you want PlotTbl to
+assign the different values of the indicated code variable to the
+different line widths in the order in which they appear in the table
+(i.e., ’stable’, which is the default) or whether you want them assigned
+in sorted numerical order.
+
+Example: *PlotTbl(…,’LineWidthOrder’,’sorted’)*
+
+In this example the values of the indicated code variable will be
+assigned to line widths in numerical order, regardless of the order in
+which they appear in the table.
+
 Name-value pair: *LineWidthLegend — cell array of legend labels*
 
 This name-value pair indicates that you want to replace PlotTbl’s
 default labels of the line widths with the new labels indicated in your
-cell array.
+cell array. The order of the legend labels in the cell array should
+correspond to the order in which the different values of the indicated
+variable are assigned to the different line widths, as determined by the
+LineWidthOrder name-value pair.
 
 Example: *PlotTbl(…,’LineWidthLegend’,{’Male’ ’Female’})*
 
@@ -437,7 +531,9 @@ used in combination with the name-value pair
 Name-value pairs for marker size control
 ----------------------------------------
 
-Name-value pair: *MarkerSizeCodeVar — variable name*
+Name-value pair: *MarkerSizeCodeVar — variable name* (or
+equivalently)\
+Name-value pair: *MarkerSize — variable name*
 
 This name-value pair indicates that a different marker size should be
 used for each different value of the indicated variable. The variable
@@ -449,7 +545,8 @@ In this example different marker sizes will be used to plot the data for
 males versus females (i.e., Gender==1 versus Gender==2).
 
 Name-value pair: *MarkerSizeXVars — cell array of variable
-names*
+names* (or equivalently)\
+Name-value pair: *MarkerSizeX — cell array of variable names*
 
 This name-value pair indicates that different marker sizes should be
 used to distinguish different variables in the table, with those
@@ -462,7 +559,8 @@ In this example different marker sizes will be used to distinguish lines
 whose X values are AvgHeight versus lines whose X values are AvgWeight.
 
 Name-value pair: *MarkerSizeYVars — cell array of variable
-names*
+names* (or equivalently)\
+Name-value pair: *MarkerSizeY — cell array of variable names*
 
 This name-value pair indicates that different marker sizes should be
 used to distinguish different variables in the table, with those
@@ -493,12 +591,30 @@ Example: *PlotTbl(…,’MarkerSizeSpecs’,\7 10\)*
 In this example the first marker will have size 7 and the second will
 have size 10.
 
+Name-value pair: *MarkerSizeOrder — ’stable’ or ’sorted’*
+
+This name-value pair is only applicable when used in conjunction with
+the ’MarkerSizeCodeVar’ pair. It indicates whether you want PlotTbl to
+assign the different values of the indicated code variable to the
+different marker sizes in the order in which they appear in the table
+(i.e., ’stable’, which is the default) or whether you want them assigned
+in sorted numerical order.
+
+Example: *PlotTbl(…,’MarkerSizeOrder’,’sorted’)*
+
+In this example the values of the indicated code variable will be
+assigned to marker sizes in numerical order, regardless of the order in
+which they appear in the table.
+
 Name-value pair: *MarkerSizeLegend — cell array of legend
 labels*
 
 This name-value pair indicates that you want to replace PlotTbl’s
 default labels of the marker sizes with the new labels indicated in your
-cell array.
+cell array. The order of the legend labels in the cell array should
+correspond to the order in which the different values of the indicated
+variable are assigned to the different marker sizes, as determined by
+the MarkerSizeOrder name-value pair.
 
 Example: *PlotTbl(…,’MarkerSizeLegend’,{’Male’ ’Female’})*
 
@@ -676,6 +792,7 @@ Appendix: Complete List of Name-value Pairs
 
 *ColorCodeVar — variable name*\
 *ColorLegend — cell array of legend labels*\
+*ColorOrder — ’stable’ or ’sorted’*\
 *ColorSpecs — string list of colors*\
 *ColorXVars — cell array of variable names*\
 *ColorYVars — cell array of variable names*\
@@ -685,36 +802,46 @@ Appendix: Complete List of Name-value Pairs
 *LegendPos — \left bottom width height\*\
 *LineTypeCodeVar — variable name*\
 *LineTypeLegend — cell array of legend labels*\
+*LineTypeOrder — ’stable’ or ’sorted’*\
 *LineTypeSpecs — cell array of line type specifications*\
 *LineTypeXVars — cell array of variable names*\
 *LineTypeYVars — cell array of variable names*\
 *LineWidthCodeVar — variable name*\
 *LineWidthLegend — cell array of legend labels*\
+*LineWidthOrder — ’stable’ or ’sorted’*\
 *LineWidthSpecs — vector of line widths*\
 *LineWidthXVars — cell array of variable names*\
 *LineWidthYVars — cell array of variable names*\
 *MarkerSizeCodeVar — variable name*\
 *MarkerSizeLegend — cell array of legend labels*\
+*MarkerSizeOrder — ’stable’ or ’sorted’*\
 *MarkerSizeSpecs — vector of marker sizes*\
 *MarkerSizeXVars — cell array of variable names*\
 *MarkerSizeYVars — cell array of variable names*\
 *MarkerTypeCodeVar — variable name*\
 *MarkerTypeLegend — cell array of legend labels*\
+*MarkerTypeOrder — ’stable’ or ’sorted’*\
 *MarkerTypeSpecs — string list of marker type specifications*\
 *MarkerTypeXVars — cell array of variable names*\
 *MarkerTypeYVars — cell array of variable names*\
 *SubplotColsCodeVar — variable name*\
 *SubplotColsLegend — cell array of legend labels*\
+*SubplotColsOrder — ’stable’ or ’sorted’*\
 *SubplotColsXVars — cell array of variable names*\
 *SubplotColsYVars — cell array of variable names*\
 *SubplotRowsCodeVar — variable name*\
 *SubplotRowsLegend — cell array of legend labels*\
+*SubplotRowsOrder — ’stable’ or ’sorted’*\
 *SubplotRowsXVars — cell array of variable names*\
 *SubplotRowsYVars — cell array of variable names*\
 *XLabel — vector of subplot numbers*\
 *XLabelStr — vector of subplot numbers*\
 *YLabel — vector of subplot numbers*\
-*YLabelStr — vector of subplot numbers*
+*YLabelStr — vector of subplot numbers*\
+
+Note: Name-value pairs of the form “???CodeVar” can be abbreviated as
+just “???”, and those of the form “???XVars” or “???YVars” can be
+abbreviated as “???X” or “???Y”.
 
 Appendix: Line Types in MATLAB
 ==============================
@@ -728,6 +855,8 @@ In PlotTbl’s default order:
 -   ’:’: Dotted line
 
 -   ’-.’: Dash-dot line
+
+Use ’none’ or ’ ’ to omit the line.
 
 Appendix: Marker Types in MATLAB
 ================================
@@ -759,6 +888,8 @@ In PlotTbl’s default order:
 -   ’pentagram’ or ’p’: Five-pointed star (pentagram)
 
 -   ’hexagram’ or ’h’: Six-pointed star (hexagram)
+
+Use ’none’ or ’ ’ to omit the marker.
 
 Appendix: Colors in MATLAB
 ==========================

@@ -90,7 +90,7 @@ function SubplotTbl, which plots only one subplot within a subplot-type figure.
 2</a>&nbsp;&nbsp;Requirements</h2>
 
 <div class="p"><!----></div>
-You need a version of MATLAB that supports the "table" data type.
+You need a version of MATLAB that supports the "table" data type (R2013b or newer).
 You also need my MATLAB package ExtractNameVal available at
 https://github.com/milleratotago/ExtractNameVal
 
@@ -265,7 +265,8 @@ All seven are controlled with basically the same set of options.
 6.1</a>&nbsp;&nbsp;Name-value pairs for line type control</h3>
 
 <div class="p"><!----></div>
-Name-value pair: <i>LineTypeCodeVar - variable name</i>
+Name-value pair: <i>LineTypeCodeVar - variable name</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>LineType - variable name</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that a different line type should be used
@@ -279,7 +280,8 @@ Example: <i>PlotTbl(...,'LineTypeCodeVar','Gender')</i>
 In this example different line types will be used to plot the data for males versus females (i.e., Gender==1 versus Gender==2).
 
 <div class="p"><!----></div>
-Name-value pair: <i>LineTypeXVars - cell array of variable names</i>
+Name-value pair: <i>LineTypeXVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>LineTypeX - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different line types should be used to distinguish
@@ -293,7 +295,8 @@ In this example different line types will be used to distinguish lines whose X v
 are AvgHeight versus lines whose X values are AvgWeight.
 
 <div class="p"><!----></div>
-Name-value pair: <i>LineTypeYVars - cell array of variable names</i>
+Name-value pair: <i>LineTypeYVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>LineTypeY - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different line types should be used to distinguish
@@ -330,11 +333,31 @@ Example: <i>PlotTbl(...,'LineTypeSpecs',{':' '-.'})</i>
 In this example the first line will be dotted and the second line will be dash/dot.
 
 <div class="p"><!----></div>
+Name-value pair: <i>LineTypeOrder - 'stable' or 'sorted'</i>
+
+<div class="p"><!----></div>
+This name-value pair is only applicable when used in conjunction with the 'LineTypeCodeVar' pair.
+It indicates whether you want PlotTbl to assign the different values of the indicated code variable to the
+different line types in the order in which they appear in the table (i.e., 'stable', which is
+the default) or whether you want them assigned in sorted numerical order.
+
+<div class="p"><!----></div>
+Example: <i>PlotTbl(...,'LineTypeOrder','sorted')</i>
+
+<div class="p"><!----></div>
+In this example the values of the indicated code variable will be
+assigned to line types in numerical order, regardless of the order in which
+they appear in the table.
+
+<div class="p"><!----></div>
 Name-value pair: <i>LineTypeLegend - cell array of legend labels</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that you want to replace PlotTbl's default labels of the line types
 with the new labels indicated in your cell array.
+The order of the legend labels in the cell array should correspond to the
+order in which the different values of the indicated variable are assigned to the different line types,
+as determined by the LineTypeOrder name-value pair.
 
 <div class="p"><!----></div>
 Example: <i>PlotTbl(...,'LineTypeLegend',{'Male' 'Female'})</i>
@@ -354,7 +377,8 @@ line widths, marker sizes, and subplots as described in the following subsection
 6.2</a>&nbsp;&nbsp;Name-value pairs for marker type control</h3>
 
 <div class="p"><!----></div>
-Name-value pair: <i>MarkerTypeCodeVar - variable name</i>
+Name-value pair: <i>MarkerTypeCodeVar - variable name</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>MarkerType - variable name</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that a different marker type should be used
@@ -368,7 +392,8 @@ Example: <i>PlotTbl(...,'MarkerTypeCodeVar','Gender')</i>
 In this example different marker types will be used to plot the data for males versus females (i.e., Gender==1 versus Gender==2).
 
 <div class="p"><!----></div>
-Name-value pair: <i>MarkerTypeXVars - cell array of variable names</i>
+Name-value pair: <i>MarkerTypeXVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>MarkerTypeX - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different marker types should be used to distinguish
@@ -382,7 +407,8 @@ In this example different marker types will be used to distinguish lines whose X
 are AvgHeight versus lines whose X values are AvgWeight.
 
 <div class="p"><!----></div>
-Name-value pair: <i>MarkerTypeYVars - cell array of variable names</i>
+Name-value pair: <i>MarkerTypeYVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>MarkerTypeY - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different marker types should be used to distinguish
@@ -419,11 +445,31 @@ Example: <i>PlotTbl(...,'MarkerTypeSpecs','so*')</i>
 In this example the first marker will be the square, the second will be the circle, and the third will be the asterisk.
 
 <div class="p"><!----></div>
+Name-value pair: <i>MarkerTypeOrder - 'stable' or 'sorted'</i>
+
+<div class="p"><!----></div>
+This name-value pair is only applicable when used in conjunction with the 'MarkerTypeCodeVar' pair.
+It indicates whether you want PlotTbl to assign the different values of the indicated code variable to the
+different marker types in the order in which they appear in the table (i.e., 'stable', which is
+the default) or whether you want them assigned in sorted numerical order.
+
+<div class="p"><!----></div>
+Example: <i>PlotTbl(...,'MarkerTypeOrder','sorted')</i>
+
+<div class="p"><!----></div>
+In this example the values of the indicated code variable will be
+assigned to marker types in numerical order, regardless of the order in which
+they appear in the table.
+
+<div class="p"><!----></div>
 Name-value pair: <i>MarkerTypeLegend - cell array of legend labels</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that you want to replace PlotTbl's default labels of the marker types
 with the new labels indicated in your cell array.
+The order of the legend labels in the cell array should correspond to the
+order in which the different values of the indicated variable are assigned to the different marker types,
+as determined by the MarkerTypeOrder name-value pair.
 
 <div class="p"><!----></div>
 Example: <i>PlotTbl(...,'MarkerTypeLegend',{'Male' 'Female'})</i>
@@ -438,7 +484,8 @@ Obviously, this option would make sense if used in combination with the name-val
 6.3</a>&nbsp;&nbsp;Name-value pairs for color control</h3>
 
 <div class="p"><!----></div>
-Name-value pair: <i>ColorCodeVar - variable name</i>
+Name-value pair: <i>ColorCodeVar - variable name</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>Color - variable name</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that a different color should be used
@@ -452,7 +499,8 @@ Example: <i>PlotTbl(...,'ColorCodeVar','Gender')</i>
 In this example different colors will be used to plot the data for males versus females (i.e., Gender==1 versus Gender==2).
 
 <div class="p"><!----></div>
-Name-value pair: <i>ColorXVars - cell array of variable names</i>
+Name-value pair: <i>ColorXVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>ColorX - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different colors should be used to distinguish
@@ -466,7 +514,8 @@ In this example different colors will be used to distinguish lines whose X value
 are AvgHeight versus lines whose X values are AvgWeight.
 
 <div class="p"><!----></div>
-Name-value pair: <i>ColorYVars - cell array of variable names</i>
+Name-value pair: <i>ColorYVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>ColorY - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different colors should be used to distinguish
@@ -503,11 +552,31 @@ Example: <i>PlotTbl(...,'ColorSpecs','rgbk')</i>
 In this example the first line will be red, the second green, the third blue, and the fourth black.
 
 <div class="p"><!----></div>
+Name-value pair: <i>ColorOrder - 'stable' or 'sorted'</i>
+
+<div class="p"><!----></div>
+This name-value pair is only applicable when used in conjunction with the 'ColorCodeVar' pair.
+It indicates whether you want PlotTbl to assign the different values of the indicated code variable to the
+different colors in the order in which they appear in the table (i.e., 'stable', which is
+the default) or whether you want them assigned in sorted numerical order.
+
+<div class="p"><!----></div>
+Example: <i>PlotTbl(...,'ColorOrder','sorted')</i>
+
+<div class="p"><!----></div>
+In this example the values of the indicated code variable will be
+assigned to colors in numerical order, regardless of the order in which
+they appear in the table.
+
+<div class="p"><!----></div>
 Name-value pair: <i>ColorLegend - cell array of legend labels</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that you want to replace PlotTbl's default labels of the colors
 with the new labels indicated in your cell array.
+The order of the legend labels in the cell array should correspond to the
+order in which the different values of the indicated variable are assigned to the different colors,
+as determined by the ColorOrder name-value pair.
 
 <div class="p"><!----></div>
 Example: <i>PlotTbl(...,'ColorLegend',{'Male' 'Female'})</i>
@@ -522,7 +591,8 @@ Obviously, this option would make sense if used in combination with the name-val
 6.4</a>&nbsp;&nbsp;Name-value pairs for line width control</h3>
 
 <div class="p"><!----></div>
-Name-value pair: <i>LineWidthCodeVar - variable name</i>
+Name-value pair: <i>LineWidthCodeVar - variable name</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>LineWidth - variable name</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that a different line width should be used
@@ -536,7 +606,8 @@ Example: <i>PlotTbl(...,'LineWidthCodeVar','Gender')</i>
 In this example different line widths will be used to plot the data for males versus females (i.e., Gender==1 versus Gender==2).
 
 <div class="p"><!----></div>
-Name-value pair: <i>LineWidthXVars - cell array of variable names</i>
+Name-value pair: <i>LineWidthXVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>LineWidthX - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different line widths should be used to distinguish
@@ -550,7 +621,8 @@ In this example different line widths will be used to distinguish lines whose X 
 are AvgHeight versus lines whose X values are AvgWeight.
 
 <div class="p"><!----></div>
-Name-value pair: <i>LineWidthYVars - cell array of variable names</i>
+Name-value pair: <i>LineWidthYVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>LineWidthY - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different line widths should be used to distinguish
@@ -587,11 +659,31 @@ Example: <i>PlotTbl(...,'LineWidthSpecs',[3 5 8 12])</i>
 In this example the first line will have width 3, the next width 5, etc.
 
 <div class="p"><!----></div>
+Name-value pair: <i>LineWidthOrder - 'stable' or 'sorted'</i>
+
+<div class="p"><!----></div>
+This name-value pair is only applicable when used in conjunction with the 'LineWidthCodeVar' pair.
+It indicates whether you want PlotTbl to assign the different values of the indicated code variable to the
+different line widths in the order in which they appear in the table (i.e., 'stable', which is
+the default) or whether you want them assigned in sorted numerical order.
+
+<div class="p"><!----></div>
+Example: <i>PlotTbl(...,'LineWidthOrder','sorted')</i>
+
+<div class="p"><!----></div>
+In this example the values of the indicated code variable will be
+assigned to line widths in numerical order, regardless of the order in which
+they appear in the table.
+
+<div class="p"><!----></div>
 Name-value pair: <i>LineWidthLegend - cell array of legend labels</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that you want to replace PlotTbl's default labels of the line widths
 with the new labels indicated in your cell array.
+The order of the legend labels in the cell array should correspond to the
+order in which the different values of the indicated variable are assigned to the different line widths,
+as determined by the LineWidthOrder name-value pair.
 
 <div class="p"><!----></div>
 Example: <i>PlotTbl(...,'LineWidthLegend',{'Male' 'Female'})</i>
@@ -606,7 +698,8 @@ Obviously, this option would make sense if used in combination with the name-val
 6.5</a>&nbsp;&nbsp;Name-value pairs for marker size control</h3>
 
 <div class="p"><!----></div>
-Name-value pair: <i>MarkerSizeCodeVar - variable name</i>
+Name-value pair: <i>MarkerSizeCodeVar - variable name</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>MarkerSize - variable name</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that a different marker size should be used
@@ -620,7 +713,8 @@ Example: <i>PlotTbl(...,'MarkerSizeCodeVar','Gender')</i>
 In this example different marker sizes will be used to plot the data for males versus females (i.e., Gender==1 versus Gender==2).
 
 <div class="p"><!----></div>
-Name-value pair: <i>MarkerSizeXVars - cell array of variable names</i>
+Name-value pair: <i>MarkerSizeXVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>MarkerSizeX - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different marker sizes should be used to distinguish
@@ -634,7 +728,8 @@ In this example different marker sizes will be used to distinguish lines whose X
 are AvgHeight versus lines whose X values are AvgWeight.
 
 <div class="p"><!----></div>
-Name-value pair: <i>MarkerSizeYVars - cell array of variable names</i>
+Name-value pair: <i>MarkerSizeYVars - cell array of variable names</i>  &nbsp;&nbsp;&nbsp;&nbsp; (or equivalently) <br />
+Name-value pair: <i>MarkerSizeY - cell array of variable names</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that different marker sizes should be used to distinguish
@@ -671,11 +766,31 @@ Example: <i>PlotTbl(...,'MarkerSizeSpecs',[7 10])</i>
 In this example the first marker will have size 7 and the second will have size 10.
 
 <div class="p"><!----></div>
+Name-value pair: <i>MarkerSizeOrder - 'stable' or 'sorted'</i>
+
+<div class="p"><!----></div>
+This name-value pair is only applicable when used in conjunction with the 'MarkerSizeCodeVar' pair.
+It indicates whether you want PlotTbl to assign the different values of the indicated code variable to the
+different marker sizes in the order in which they appear in the table (i.e., 'stable', which is
+the default) or whether you want them assigned in sorted numerical order.
+
+<div class="p"><!----></div>
+Example: <i>PlotTbl(...,'MarkerSizeOrder','sorted')</i>
+
+<div class="p"><!----></div>
+In this example the values of the indicated code variable will be
+assigned to marker sizes in numerical order, regardless of the order in which
+they appear in the table.
+
+<div class="p"><!----></div>
 Name-value pair: <i>MarkerSizeLegend - cell array of legend labels</i>
 
 <div class="p"><!----></div>
 This name-value pair indicates that you want to replace PlotTbl's default labels of the marker sizes
 with the new labels indicated in your cell array.
+The order of the legend labels in the cell array should correspond to the
+order in which the different values of the indicated variable are assigned to the different marker sizes,
+as determined by the MarkerSizeOrder name-value pair.
 
 <div class="p"><!----></div>
 Example: <i>PlotTbl(...,'MarkerSizeLegend',{'Male' 'Female'})</i>
@@ -885,6 +1000,7 @@ A</a>&nbsp;&nbsp;Appendix: Complete List of Name-value Pairs</h2>
 <div class="p"><!----></div>
 <i>ColorCodeVar - variable name</i> <br />
 <i>ColorLegend - cell array of legend labels</i> <br />
+<i>ColorOrder - 'stable' or 'sorted'</i> <br />
 <i>ColorSpecs - string list of colors</i> <br />
 <i>ColorXVars - cell array of variable names</i> <br />
 <i>ColorYVars - cell array of variable names</i> <br />
@@ -894,36 +1010,46 @@ A</a>&nbsp;&nbsp;Appendix: Complete List of Name-value Pairs</h2>
 <i>LegendPos - [left bottom width height]</i> <br />
 <i>LineTypeCodeVar - variable name</i> <br />
 <i>LineTypeLegend - cell array of legend labels</i> <br />
+<i>LineTypeOrder - 'stable' or 'sorted'</i> <br />
 <i>LineTypeSpecs - cell array of line type specifications</i> <br />
 <i>LineTypeXVars - cell array of variable names</i> <br />
 <i>LineTypeYVars - cell array of variable names</i> <br />
 <i>LineWidthCodeVar - variable name</i> <br />
 <i>LineWidthLegend - cell array of legend labels</i> <br />
+<i>LineWidthOrder - 'stable' or 'sorted'</i> <br />
 <i>LineWidthSpecs - vector of line widths</i> <br />
 <i>LineWidthXVars - cell array of variable names</i> <br />
 <i>LineWidthYVars - cell array of variable names</i> <br />
 <i>MarkerSizeCodeVar - variable name</i> <br />
 <i>MarkerSizeLegend - cell array of legend labels</i> <br />
+<i>MarkerSizeOrder - 'stable' or 'sorted'</i> <br />
 <i>MarkerSizeSpecs - vector of marker sizes</i> <br />
 <i>MarkerSizeXVars - cell array of variable names</i> <br />
 <i>MarkerSizeYVars - cell array of variable names</i> <br />
 <i>MarkerTypeCodeVar - variable name</i> <br />
 <i>MarkerTypeLegend - cell array of legend labels</i> <br />
+<i>MarkerTypeOrder - 'stable' or 'sorted'</i> <br />
 <i>MarkerTypeSpecs - string list of marker type specifications</i> <br />
 <i>MarkerTypeXVars - cell array of variable names</i> <br />
 <i>MarkerTypeYVars - cell array of variable names</i> <br />
 <i>SubplotColsCodeVar - variable name</i> <br />
 <i>SubplotColsLegend - cell array of legend labels</i> <br />
+<i>SubplotColsOrder - 'stable' or 'sorted'</i> <br />
 <i>SubplotColsXVars - cell array of variable names</i> <br />
 <i>SubplotColsYVars - cell array of variable names</i> <br />
 <i>SubplotRowsCodeVar - variable name</i> <br />
 <i>SubplotRowsLegend - cell array of legend labels</i> <br />
+<i>SubplotRowsOrder - 'stable' or 'sorted'</i> <br />
 <i>SubplotRowsXVars - cell array of variable names</i> <br />
 <i>SubplotRowsYVars - cell array of variable names</i> <br />
 <i>XLabel - vector of subplot numbers</i> <br />
 <i>XLabelStr - vector of subplot numbers</i> <br />
 <i>YLabel - vector of subplot numbers</i> <br />
-<i>YLabelStr - vector of subplot numbers</i>
+<i>YLabelStr - vector of subplot numbers</i> <br />
+
+<div class="p"><!----></div>
+Note: Name-value pairs of the form "???CodeVar" can be abbreviated as just "???",
+and those of the form "???XVars" or "???YVars" can be abbreviated as "???X" or "???Y".
 
 <div class="p"><!----></div>
  <h2><a name="tth_sEcB">
@@ -951,6 +1077,9 @@ In PlotTbl's default order:
 <div class="p"><!----></div>
 </li>
 </ul>
+
+<div class="p"><!----></div>
+Use 'none' or ' ' to omit the line.
 
 <div class="p"><!----></div>
  <h2><a name="tth_sEcC">
@@ -1016,6 +1145,9 @@ In PlotTbl's default order:
 </ul>
 
 <div class="p"><!----></div>
+Use 'none' or ' ' to omit the marker.
+
+<div class="p"><!----></div>
  <h2><a name="tth_sEcD">
 D</a>&nbsp;&nbsp;Appendix: Colors in MATLAB</h2>
 
@@ -1064,5 +1196,5 @@ In PlotTbl's default order:
 T<sub><font size="-1">E</font></sub>X
 by <a href="http://hutchinson.belmont.ma.us/tth/">
 T<sub><font size="-1">T</font></sub>Hgold</a>,
-version 4.00.<br />On 28 Sep 2017, 14:34.</small>
+version 4.00.<br />On 12 Oct 2017, 08:58.</small>
 </html>

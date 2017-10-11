@@ -38,7 +38,8 @@
 
 \subsection{Name-value pairs for #2 control}
 
-Name-value pair: \namevalue{#1CodeVar}{variable name}
+Name-value pair: \namevalue{#1CodeVar}{variable name}  \hspace{6mm} (or equivalently) \\
+Name-value pair: \namevalue{#1}{variable name}
 
 This name-value pair indicates that a different #2 should be used
 for each different value of the indicated variable.
@@ -48,7 +49,8 @@ The variable name is specified as a character vector, say sVar.
 
 In this example different #2s will be used to plot the data for males versus females (i.e., Gender==1 versus Gender==2).
 
-Name-value pair: \namevalue{#1XVars}{cell array of variable names}
+Name-value pair: \namevalue{#1XVars}{cell array of variable names}  \hspace{6mm} (or equivalently) \\
+Name-value pair: \namevalue{#1X}{cell array of variable names}
 
 This name-value pair indicates that different #2s should be used to distinguish
 different variables in the table, with those variables being used as X's in the X/Y plots.
@@ -58,7 +60,8 @@ different variables in the table, with those variables being used as X's in the 
 In this example different #2s will be used to distinguish lines whose X values
 are AvgHeight versus lines whose X values are AvgWeight.
 
-Name-value pair: \namevalue{#1YVars}{cell array of variable names}
+Name-value pair: \namevalue{#1YVars}{cell array of variable names}  \hspace{6mm} (or equivalently) \\
+Name-value pair: \namevalue{#1Y}{cell array of variable names}
 
 This name-value pair indicates that different #2s should be used to distinguish
 different variables in the table, with those variables being used as Y's in the X/Y plots.
@@ -86,10 +89,26 @@ or the order of the variables listed for #1XVars or #1YVars.
 
 In this example #5
 
+Name-value pair: \namevalue{#1Order}{'stable' or 'sorted'}
+
+This name-value pair is only applicable when used in conjunction with the '#1CodeVar' pair.
+It indicates whether you want PlotTbl to assign the different values of the indicated code variable to the
+different #2s in the order in which they appear in the table (i.e., 'stable', which is
+the default) or whether you want them assigned in sorted numerical order.
+
+\example{PlotTbl(...,'#1Order','sorted')}
+
+In this example the values of the indicated code variable will be
+assigned to #2s in numerical order, regardless of the order in which
+they appear in the table.
+
 Name-value pair: \namevalue{#1Legend}{cell array of legend labels}
 
 This name-value pair indicates that you want to replace PlotTbl's default labels of the #2s
 with the new labels indicated in your cell array.
+The order of the legend labels in the cell array should correspond to the
+order in which the different values of the indicated variable are assigned to the different #2s,
+as determined by the #1Order name-value pair.
 
 \example{PlotTbl(...,'#1Legend',\{'Male' 'Female'\})}
 
@@ -122,7 +141,7 @@ function SubplotTbl, which plots only one subplot within a subplot-type figure.
 
 \section{Requirements}
 
-You need a version of MATLAB that supports the ``table'' data type.
+You need a version of MATLAB that supports the ``table'' data type (R2013b or newer).
 You also need my MATLAB package ExtractNameVal available at
 https://github.com/milleratotago/ExtractNameVal
 
@@ -406,8 +425,10 @@ markers if this option were not specified.
 
 \section{Appendix: Complete List of Name-value Pairs}
 
+% Don't sort this list: Legend, XLabel, and YLabel go to the ends.
 \namevalue{ColorCodeVar}{variable name} \\
 \namevalue{ColorLegend}{cell array of legend labels} \\
+\namevalue{ColorOrder}{'stable' or 'sorted'} \\
 \namevalue{ColorSpecs}{string list of colors} \\
 \namevalue{ColorXVars}{cell array of variable names} \\
 \namevalue{ColorYVars}{cell array of variable names} \\
@@ -417,36 +438,45 @@ markers if this option were not specified.
 \namevalue{LegendPos}{[left bottom width height]} \\
 \namevalue{LineTypeCodeVar}{variable name} \\
 \namevalue{LineTypeLegend}{cell array of legend labels} \\
+\namevalue{LineTypeOrder}{'stable' or 'sorted'} \\
 \namevalue{LineTypeSpecs}{cell array of line type specifications} \\
 \namevalue{LineTypeXVars}{cell array of variable names} \\
 \namevalue{LineTypeYVars}{cell array of variable names} \\
 \namevalue{LineWidthCodeVar}{variable name} \\
 \namevalue{LineWidthLegend}{cell array of legend labels} \\
+\namevalue{LineWidthOrder}{'stable' or 'sorted'} \\
 \namevalue{LineWidthSpecs}{vector of line widths} \\
 \namevalue{LineWidthXVars}{cell array of variable names} \\
 \namevalue{LineWidthYVars}{cell array of variable names} \\
 \namevalue{MarkerSizeCodeVar}{variable name} \\
 \namevalue{MarkerSizeLegend}{cell array of legend labels} \\
+\namevalue{MarkerSizeOrder}{'stable' or 'sorted'} \\
 \namevalue{MarkerSizeSpecs}{vector of marker sizes} \\
 \namevalue{MarkerSizeXVars}{cell array of variable names} \\
 \namevalue{MarkerSizeYVars}{cell array of variable names} \\
 \namevalue{MarkerTypeCodeVar}{variable name} \\
 \namevalue{MarkerTypeLegend}{cell array of legend labels} \\
+\namevalue{MarkerTypeOrder}{'stable' or 'sorted'} \\
 \namevalue{MarkerTypeSpecs}{string list of marker type specifications} \\
 \namevalue{MarkerTypeXVars}{cell array of variable names} \\
 \namevalue{MarkerTypeYVars}{cell array of variable names} \\
 \namevalue{SubplotColsCodeVar}{variable name} \\
 \namevalue{SubplotColsLegend}{cell array of legend labels} \\
+\namevalue{SubplotColsOrder}{'stable' or 'sorted'} \\
 \namevalue{SubplotColsXVars}{cell array of variable names} \\
 \namevalue{SubplotColsYVars}{cell array of variable names} \\
 \namevalue{SubplotRowsCodeVar}{variable name} \\
 \namevalue{SubplotRowsLegend}{cell array of legend labels} \\
+\namevalue{SubplotRowsOrder}{'stable' or 'sorted'} \\
 \namevalue{SubplotRowsXVars}{cell array of variable names} \\
 \namevalue{SubplotRowsYVars}{cell array of variable names} \\
 \namevalue{XLabel}{vector of subplot numbers} \\
 \namevalue{XLabelStr}{vector of subplot numbers} \\
 \namevalue{YLabel}{vector of subplot numbers} \\
-\namevalue{YLabelStr}{vector of subplot numbers}
+\namevalue{YLabelStr}{vector of subplot numbers} \\
+
+Note: Name-value pairs of the form ``???CodeVar'' can be abbreviated as just ``???'',
+and those of the form ``???XVars'' or ``???YVars'' can be abbreviated as ``???X'' or ``???Y''.
 
 \section{Appendix: Line Types in MATLAB}
 
@@ -458,6 +488,8 @@ In PlotTbl's default order:
 \item ':': Dotted line
 \item '-.': Dash-dot line
 \end{itemize}
+
+Use 'none' or ' ' to omit the line.
 
 \section{Appendix: Marker Types in MATLAB}
 
@@ -478,6 +510,8 @@ In PlotTbl's default order:
 \item 'pentagram' or 'p': Five-pointed star (pentagram)
 \item 'hexagram' or 'h': Six-pointed star (hexagram)
 \end{itemize}
+
+Use 'none' or ' ' to omit the marker.
 
 \section{Appendix: Colors in MATLAB}
 

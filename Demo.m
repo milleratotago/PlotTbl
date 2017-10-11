@@ -105,7 +105,6 @@ figure('Position',[50 50 1000 700]);  PlotTbl(AHWDat, ...
 
 PlotTbl(AHWDat(AHWDat.Gender==2,:),'Age','AvgWeight','LineTypeCodeVar','Nationality');
 
-
 %% Example of calling SubplotTbl separately for each subplot, to get more control.
 figure;
 MaleDat = AHWDat(AHWDat.Gender==1,:);
@@ -121,4 +120,15 @@ SubplotTbl(FemaleDat,'Age','AvgHeight','LineWidthCodeVar','Nationality', ...
 axis([0 20 110 160]);
 title('Heights of Females');
 
+%% Plots made using some of the name-pair abbreviations:
+figure; PlotTbl(AHWDat,'Age','AvgWeight','LineType','Nationality','SubPlotRows','Gender');
+figure; PlotTbl(AHWDat,'Age','LineType','Nationality','SubPlotRows','Gender','SubPlotColsY',{'AvgWeight','AvgHeight'});
+
+%% Illustration of controlling display order.
+GendersReversed = [FemaleDat; MaleDat];  % Make a new data table with the genders in reverse order just so the stable and sorted orders are different.
+% When these data are plotted in the default stable order, Gender=2 comes out first (because the females are at the top of the table).
+% Be careful with the legends!  These must be specified in the plotting order.
+figure; PlotTbl(GendersReversed,'Age','AvgWeight','LineType','Nationality','SubPlotRows','Gender','SubPlotRowsLegend',{'Female','Male'});
+% When these data are plotted in the numerically sorted order, Gender=1 comes out first.
+figure; PlotTbl(GendersReversed,'Age','AvgWeight','LineType','Nationality','SubPlotRows','Gender','SubPlotRowsOrder','sorted','SubPlotRowsLegend',{'Male','Female'});
 
