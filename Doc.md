@@ -94,6 +94,7 @@ AHWDat.Gender is 1/2 to code male/female, and AHWDat.Nationality is
 AHWDat.Age holds the ages (2, 4, 6, 8, 10, 12). The variables
 AHWDat.AvgWeight, and AHWDat.AvgHeight hold the average weights and
 heights of the children of each gender, nationality, and age group.
+
 Example:
 *PlotTbl(AHWDat,’Age’,’AvgWeight’,’SubplotRowsCodeVar’,’Gender’,’SubplotColsCodeVar’,’Nationality’)*
 
@@ -586,7 +587,7 @@ standard marker size specifications in whatever order you prefer. The
 marker sizes will be used in order by values of the CodeVar or the order
 of the variables listed for MarkerSizeXVars or MarkerSizeYVars.
 
-Example: *PlotTbl(…,’MarkerSizeSpecs’,\7 10\)*
+Example: *PlotTbl(…,’MarkerSizeSpecs’,\[7 10\])*
 
 In this example the first marker will have size 7 and the second will
 have size 10.
@@ -696,7 +697,7 @@ in the vector. By default, all axes are labelled; this option is used
 when you want to turn off some of the labels. The subplots are numbered
 using the standard numbering scheme for MATLAB’s subplot command.
 
-Example: *PlotTbl(…,’XLabel’,\7 8 9\,’YLabel’,\1 4 7\)*
+Example: *PlotTbl(…,’XLabel’,\[7 8 9\],’YLabel’,\[1 4 7\])*
 
 In this example, with a 3x3 arrangement of subplots, the X axes will be
 labelled for the plots in the bottom row (i.e., subplot numbers 7-9) and
@@ -727,9 +728,10 @@ Name-value Pairs for Control of Legends
 Name-value pair: *Legend — vector of subplot numbers*
 
 This name-value pair provides a list of numbers of the subplots for
-which you want the legends to be displayed.
+which you want the legends to be displayed. By default, a legend is
+displayed only on the first subplot.
 
-Example: *PlotTbl(…,’Legend’,\1 3\)*
+Example: *PlotTbl(…,’Legend’,\[1 3\])*
 
 In this example legends will be displayed on the first and third
 subplots.
@@ -751,13 +753,33 @@ width height). Use MATLAB’s standard position specification, determined
 by its units (e.g., see https://www.mathworks.com/matlabcentral/answers/
 80980-what-does-the-four-vector-mean-in-matlab-legend-position ).
 
-Note: To override the default legen positioning, you can specify
+Note: To override the default legend positioning, you can specify
 LegendLoc or LegendPos, but not both.
 
 Name-value pair: *LegendBox — ’boxon’ or ’boxoff’*
 
 This name-value pair indicates whether you want the box on the
 legend(s). I think boxes just add clutter, so the default is ’boxoff’.
+
+SubplotReshape
+==============
+
+It is sometimes desirable to override PlotTbl’s default configuration of
+the subplots within a figure. For example, suppose you want to display
+subplots showing 9 different Y variables. If you simply use
+SubplotRowsYVars or SubplotColsYVars, you will get a 9x1 or 1x9
+configuration of plots, which does not look good. A 3x3 layout would
+look much better, and you can request that with the SubplotReshape
+name-value pair.
+
+Name-value pair: *SubplotReshape — \[nrows ncols\]*
+
+Example: *PlotTbl(…,’SubplotReshape’,\[3 3\])*
+
+In this example, PlotTbl will arrange the subplots in a configuration
+with 3 rows and 3 cols. (Note that a 3x3 layout could also be used even
+if there were only 8 different Y variables; in that case, there would
+just be an empty cell in the matrix of subplots.)
 
 Tips
 ====
@@ -799,7 +821,7 @@ Appendix: Complete List of Name-value Pairs
 *Legend — vector of subplot numbers where you want the legend*\
 *LegendBox — ’boxon’ or ’boxoff’*\
 *LegendLoc — string such as ’Northeast’*\
-*LegendPos — \left bottom width height\*\
+*LegendPos — \[left bottom width height\]*\
 *LineTypeCodeVar — variable name*\
 *LineTypeLegend — cell array of legend labels*\
 *LineTypeOrder — ’stable’ or ’sorted’*\
@@ -829,6 +851,7 @@ Appendix: Complete List of Name-value Pairs
 *SubplotColsOrder — ’stable’ or ’sorted’*\
 *SubplotColsXVars — cell array of variable names*\
 *SubplotColsYVars — cell array of variable names*\
+*SubplotReshape — \[nrows ncols\]*\
 *SubplotRowsCodeVar — variable name*\
 *SubplotRowsLegend — cell array of legend labels*\
 *SubplotRowsOrder — ’stable’ or ’sorted’*\
@@ -869,7 +892,7 @@ In PlotTbl’s default order:
 
 -   ’diamond’ or ’d’: Diamond
 
--   ’‘\^{}’: Upward-pointing triangle
+-   ’^’: Upward-pointing triangle
 
 -   ’v’: Downward-pointing triangle
 
@@ -881,9 +904,9 @@ In PlotTbl’s default order:
 
 -   ’.’: Point
 
--   ’&gt;{.math .inline}’: Right-pointing triangle
+-   ’>’: Right-pointing triangle
 
--   ’&lt;{.math .inline}’: Left-pointing triangle
+-   ’<’: Left-pointing triangle
 
 -   ’pentagram’ or ’p’: Five-pointed star (pentagram)
 

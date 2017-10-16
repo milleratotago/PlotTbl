@@ -53,7 +53,9 @@
 <a href="#tth_sEc8"
 >8&nbsp; Name-value Pairs for Control of Legends</a><br />
 <a href="#tth_sEc9"
->9&nbsp; Tips</a><br />
+>9&nbsp; SubplotReshape</a><br />
+<a href="#tth_sEc10"
+>10&nbsp; Tips</a><br />
 <a href="#tth_sEcA"
 >A&nbsp; Appendix: Complete List of Name-value Pairs</a><br />
 <a href="#tth_sEcB"
@@ -916,6 +918,7 @@ Name-value pair: <i>Legend - vector of subplot numbers</i>
 
 <div class="p"><!----></div>
 This name-value pair provides a list of numbers of the subplots for which you want the legends to be displayed.
+By default, a legend is displayed only on the first subplot.
 
 <div class="p"><!----></div>
 Example: <i>PlotTbl(...,'Legend',[1 3])</i>
@@ -944,7 +947,7 @@ Use MATLAB's standard position specification, determined by its units
 (e.g., see https://www.mathworks.com/matlabcentral/answers/ 80980-what-does-the-four-vector-mean-in-matlab-legend-position ).
 
 <div class="p"><!----></div>
-Note: To override the default legen positioning, you can specify LegendLoc or LegendPos, but not both.
+Note: To override the default legend positioning, you can specify LegendLoc or LegendPos, but not both.
 
 <div class="p"><!----></div>
 Name-value pair: <i>LegendBox - 'boxon' or 'boxoff'</i>
@@ -955,7 +958,33 @@ I think boxes just add clutter, so the default is 'boxoff'.
 
 <div class="p"><!----></div>
  <h2><a name="tth_sEc9">
-9</a>&nbsp;&nbsp;Tips</h2>
+9</a>&nbsp;&nbsp;SubplotReshape</h2>
+
+<div class="p"><!----></div>
+It is sometimes desirable to override PlotTbl's default configuration of
+the subplots within a figure.
+For example, suppose you want to display subplots showing 9 different Y variables.
+If you simply use SubplotRowsYVars or SubplotColsYVars, you will get a 9x1
+or 1x9 configuration of plots, which does not look good.
+A 3x3 layout would look much better, and you can request that with
+the SubplotReshape name-value pair.
+
+<div class="p"><!----></div>
+Name-value pair: <i>SubplotReshape - [nrows ncols]</i>
+
+<div class="p"><!----></div>
+Example: <i>PlotTbl(...,'SubplotReshape',[3 3])</i>
+
+<div class="p"><!----></div>
+In this example, PlotTbl will arrange the subplots in a configuration with
+3 rows and 3 cols.
+(Note that a 3x3 layout could also be used even if there were only 8 different
+Y variables; in that case, there would just be an empty cell in the matrix of
+subplots.)
+
+<div class="p"><!----></div>
+ <h2><a name="tth_sEc10">
+10</a>&nbsp;&nbsp;Tips</h2>
 
 <div class="p"><!----></div>
 
@@ -1037,6 +1066,7 @@ A</a>&nbsp;&nbsp;Appendix: Complete List of Name-value Pairs</h2>
 <i>SubplotColsOrder - 'stable' or 'sorted'</i> <br />
 <i>SubplotColsXVars - cell array of variable names</i> <br />
 <i>SubplotColsYVars - cell array of variable names</i> <br />
+<i>SubplotReshape - [nrows ncols]</i> <br />
 <i>SubplotRowsCodeVar - variable name</i> <br />
 <i>SubplotRowsLegend - cell array of legend labels</i> <br />
 <i>SubplotRowsOrder - 'stable' or 'sorted'</i> <br />
@@ -1196,5 +1226,5 @@ In PlotTbl's default order:
 T<sub><font size="-1">E</font></sub>X
 by <a href="http://hutchinson.belmont.ma.us/tth/">
 T<sub><font size="-1">T</font></sub>Hgold</a>,
-version 4.00.<br />On 12 Oct 2017, 08:58.</small>
+version 4.00.<br />On 16 Oct 2017, 13:46.</small>
 </html>

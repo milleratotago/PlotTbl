@@ -363,6 +363,7 @@ In this example the X axes of all four subplots will be labelled $\alpha$.
 Name-value pair: \namevalue{Legend}{vector of subplot numbers}
 
 This name-value pair provides a list of numbers of the subplots for which you want the legends to be displayed.
+By default, a legend is displayed only on the first subplot.
 
 \example{PlotTbl(...,'Legend',[1 3])}
 
@@ -384,12 +385,32 @@ indicated by the four numerical values in the vector (i.e., left bottom width he
 Use MATLAB's standard position specification, determined by its units
 (e.g., see https://www.mathworks.com/matlabcentral/answers/ 80980-what-does-the-four-vector-mean-in-matlab-legend-position ).
 
-Note: To override the default legen positioning, you can specify LegendLoc or LegendPos, but not both.
+Note: To override the default legend positioning, you can specify LegendLoc or LegendPos, but not both.
 
 Name-value pair: \namevalue{LegendBox}{'boxon' or 'boxoff'}
 
 This name-value pair indicates whether you want the box on the legend(s).
 I think boxes just add clutter, so the default is 'boxoff'.
+
+\section{SubplotReshape}
+
+It is sometimes desirable to override PlotTbl's default configuration of
+the subplots within a figure.
+For example, suppose you want to display subplots showing 9 different Y variables.
+If you simply use SubplotRowsYVars or SubplotColsYVars, you will get a 9x1
+or 1x9 configuration of plots, which does not look good.
+A 3x3 layout would look much better, and you can request that with
+the SubplotReshape name-value pair.
+
+Name-value pair: \namevalue{SubplotReshape}{[nrows ncols]}
+
+\example{PlotTbl(...,'SubplotReshape',[3 3])}
+
+In this example, PlotTbl will arrange the subplots in a configuration with
+3 rows and 3 cols.
+(Note that a 3x3 layout could also be used even if there were only 8 different
+Y variables; in that case, there would just be an empty cell in the matrix of
+subplots.)
 
 \section{Tips}
 
@@ -465,6 +486,7 @@ markers if this option were not specified.
 \namevalue{SubplotColsOrder}{'stable' or 'sorted'} \\
 \namevalue{SubplotColsXVars}{cell array of variable names} \\
 \namevalue{SubplotColsYVars}{cell array of variable names} \\
+\namevalue{SubplotReshape}{[nrows ncols]} \\
 \namevalue{SubplotRowsCodeVar}{variable name} \\
 \namevalue{SubplotRowsLegend}{cell array of legend labels} \\
 \namevalue{SubplotRowsOrder}{'stable' or 'sorted'} \\

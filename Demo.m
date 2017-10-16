@@ -132,3 +132,6 @@ figure; PlotTbl(GendersReversed,'Age','AvgWeight','LineType','Nationality','SubP
 % When these data are plotted in the numerically sorted order, Gender=1 comes out first.
 figure; PlotTbl(GendersReversed,'Age','AvgWeight','LineType','Nationality','SubPlotRows','Gender','SubPlotRowsOrder','sorted','SubPlotRowsLegend',{'Male','Female'});
 
+%% Illustration of SubplotReshape.
+% Make a separate figure for each of the six ages, but show them as 2 rows and 3 cols rather than 6 rows
+figure; PlotTbl(AHWDat,'Gender','AvgWeight','LineType','Nationality','SubPlotRows','Age','SubplotReshape',[2 3]);

@@ -1,12 +1,25 @@
 function [subplothandles] = PlotTbl(Tbl,varargin)
+
+% The shape of subplothandles is determined by the number of SubplotRows & SubplotCols
+% even if SubplotReshape is used.
+
 [SubplotRows, varargin] = ptMultiExtract(Tbl,'SubplotRows',1:50,varargin);  % Have many default specs so that NValues will be large for the
 [SubplotCols, varargin] = ptMultiExtract(Tbl,'SubplotCols',1:50,varargin);  % assert(Descriptor.NValues<=NSpecs,... at the end of ptMultiExtract
+[Reshape, varargin] = ExtractNameVali('SubplotReshape',[],varargin);
 [tfXlabel, varargin] = ExtractNameVali('XLabel',1:50,varargin);
 [XLabelStr, varargin]= ExtractNameVali('XLabelStr',{},varargin);
 [tfYlabel, varargin] = ExtractNameVali('YLabel',1:50,varargin);
 [YLabelStr, varargin]= ExtractNameVali('YLabelStr',{},varargin);
-[tfLegend, varargin] = ExtractNameVali('Legend',1:50,varargin);
-%[SubplotList, varargin] = ptMultiExtract(Tbl,'SubplotList',0,varargin);
+[tfLegend, varargin] = ExtractNameVali('Legend',1,varargin);   % Legend only on first plot, by default.
+
+if numel(Reshape)==2
+   SubplotNRows = Reshape(1);
+   SubplotNCols = Reshape(2);
+else
+   SubplotNRows = SubplotRows.NValues;
+   SubplotNCols = SubplotCols.NValues;
+end
+
 subplothandles = cell(SubplotRows.NValues,SubplotCols.NValues);
 iPlot = 0;
 for iRow=1:SubplotRows.NValues
@@ -14,7 +27,7 @@ for iRow=1:SubplotRows.NValues
     for iCol=1:SubplotCols.NValues
         [Tbl4Cols, Lgd4Cols, PCsX, PCsY] = ptDescriptorInvoke(Tbl4Rows,SubplotCols,iCol);
         iPlot = iPlot + 1;
-        subplothandles{iRow,iCol} = subplot(SubplotRows.NValues,SubplotCols.NValues,iPlot);
+        subplothandles{iRow,iCol} = subplot(SubplotNRows,SubplotNCols,iPlot);
         varargin2 = varargin;
 
         % Prepend names of X & Y variables to the argument list, as necessary:
