@@ -42,7 +42,7 @@ Name-value pair: \namevalue{#1CodeVar}{variable name}  \hspace{6mm} (or equivale
 Name-value pair: \namevalue{#1}{variable name}
 
 This name-value pair indicates that a different #2 should be used
-for each different value of the indicated variable.
+for each different value of the indicated table variable.
 The variable name is specified as a character vector, say sVar.
 
 \example{PlotTbl(...,'#1CodeVar','Gender')}
@@ -71,11 +71,24 @@ different variables in the table, with those variables being used as Y's in the 
 In this example different #2s will be used to distinguish lines whose Y values
 are AvgHeight versus lines whose Y values are AvgWeight.
 
-Note: You should never specify \emph{more than one} of the three options
-#1CodeVar, #1XVars, and #1YVars.
-That is, #2s can only be distinguished in one way or the other---not several.
-If you want the #2s to be distinguished in more than one way, use other
+Name-value pair: \namevalue{#1XYVars}{cell array of pairs of variable names}  \hspace{6mm} (or equivalently) \\
+Name-value pair: \namevalue{#1XY}{cell array of pairs of variable names}
+
+This name-value pair indicates that different #2s should be used to distinguish
+different combinations of variables in the table.
+Two variables are listed; the first is used as X's in the X/Y plots, and the second is used as Y's.
+
+\example{PlotTbl(...,'#1XYVars',\{'AvgHeight' 'AvgWeight' 'AvgWeight' 'AvgHeight'\})}
+
+In this example different #2s will be used to distinguish plots of AvgHeight as X and
+AvgWeight as Y, as compared with plots of AvgWeight as X and AvgHeight as Y.
+
+Note: You should never specify \emph{more than one} of the four options
+#1CodeVar, #1XVars, #1YVars, and #1XYVars.
+That is, #2s can only be distinguished in one of these ways---not several.
+If you want the plots to be distinguished in more than one way, use other
 design elements.
+
 
 Name-value pair: \namevalue{#1Specs}{#3}
 
@@ -148,7 +161,7 @@ https://github.com/milleratotago/ExtractNameVal
 
 \section{License}
 
-Copyright (C) 2017, Jeff Miller
+Copyright (C) 2017--2018, Jeff Miller
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -301,9 +314,9 @@ Name-value pair: \namevalue{SubplotColsYVars}{cell array of variable names}
 Each of these two name-value pairs indicates that a different subplot row or column should
 be used for X/Y plots with each of the indicated variable names on the Y axis.
 
-Note: You should never specify \emph{more than one} of the three options
-SubplotRowsCodeVar, SubplotRowsXVars, and SubplotRowsYVars,
-and never more than one of the three corresponding SubplotCols options.
+Note: You should never specify \emph{more than one} of the four options
+SubplotRowsCodeVar, SubplotRowsXVars, SubplotRowsYVars, and SubplotRowsXYVars,
+and never more than one of the four corresponding SubplotCols options.
 But you can specify both SubplotRows and SubplotCols in any
 combination that you want---that is, these ``design elements''
 can be controlled independently.
@@ -392,6 +405,34 @@ Name-value pair: \namevalue{LegendBox}{'boxon' or 'boxoff'}
 This name-value pair indicates whether you want the box on the legend(s).
 I think boxes just add clutter, so the default is 'boxoff'.
 
+\section{Name-value Pairs for Adding Reference Lines}  % NEWJEFF: This section is new.
+
+Name-value pair: \namevalue{AddXRef}{real number}
+
+This name-value pair adds a vertical reference line at the indicated X value;
+for example, you might want to add a reference line at X=0 or at X=the average X value.
+
+By default this reference line is black and dotted, but you can change these characteristics
+with the following:
+
+Name-value pair: \namevalue{XRefStyle}{character string}
+
+The character string of this pair is used as a MATLAB line descriptor such as 'k:' for a
+black dotted line (see appendices for lists of MATLAB's line types and colors).
+
+Name-value pair: \namevalue{AddYRef}{real number}
+
+Name-value pair: \namevalue{YRefStyle}{character string}
+
+These are analogous to AddXRef and XRefStyle to add a horizontal line at the indicated Y value.
+
+Name-only option: \namevalue{AddDiagonal}{ }
+
+This option has no argument, but merely indicates that a diagonal line should be drawn to mark X=Y.
+The following pair controls the style of this line, analogous to XRefStyle and YRefStyle.
+
+Name-value pair: \namevalue{DiagonalStyle}{character string}
+
 \section{SubplotReshape}
 
 It is sometimes desirable to override PlotTbl's default configuration of
@@ -412,18 +453,60 @@ In this example, PlotTbl will arrange the subplots in a configuration with
 Y variables; in that case, there would just be an empty cell in the matrix of
 subplots.)
 
+\section{Customizing Further}  % NEWJEFF: New section
+
+MATLAB's plot command recognizes many ``extra'' options that are not explicitly handled by PlotTbl.
+You can use the PassThru command to set these extra options:
+
+Name-value pair: \namevalue{PassThru}{cell array of parameters to pass to plot}
+
+\example{PlotTbl(...,'PassThru',{'MarkerIndices',[1 5 10]})}
+
+In this example, PlotTbl will display markers for the 1st, 5th, and 10th data points.
+
+For further control over the plots, you can pass a function for PlotTbl to
+call after each subplot is plotted.
+
+Name-value pair: \namevalue{Customize}{YourFunctionName}
+
+\example{PlotTbl(...,'Customize',MyCustomFn)}
+
+In this example, you would supply a function called ``MyCustomFn'' that would
+do something for each plot (e.g., set log axes).
+This function is called with the subplot row and column numbers as arguments,
+so you can do different things for different subplots if you want.
+
+Finally, even more fine-grained control can be achieved by calling the function SubplotTbl directly.
+SubplotTbl recognizes nearly all of the same formatting commands as PlotTbl
+except for SubplotRows and SubplotCols, which you have to manage yourself.
+See Demo.m for an example.
+
 \section{Tips}
 
 \begin{itemize}
 
-\item PlotTbl plots the data from all of the rows in whatever table
-is passed to it.
+\item PlotTbl plots the data from all of the rows in whatever table is passed to it.
 If you just want to plot some of the rows of a given table, just pass
 the desired row subset using MATLAB's standard row-selection methods.
 
 \example{PlotTbl(AHWDat(AHWDat.Gender==2,:),'Age','AvgWeight','LineTypeCodeVar','Nationality');} 
 
 In this example, data are just plotted for Gender 2.
+
+\item When you select out certain rows as suggested in the preceding tip, remember that
+this can change the order in which various CodeVar values appear in the table.
+For example, if you created a new table by eliminating rows with small values of height, the first gender
+to appear in the new table might be female, even though the males appeared first in the original table.
+This can create problems when you use the 'stable' Order and specify your own legends
+with a command like 'LineTypeLegend',\{'Male' 'Female'\}.
+If the females appear first in the new table (after selection), then the male and
+female legend labels will be reversed---not good!
+
+A useful trick to avoid this problem is to reset the values that you do not want plotted to NaN.
+All rows then remain in the same so the orders of CodeVars are not perturbed,
+but MATLAB does not plot the NaN values so they are omitted, as you want.
+
+
 
 \item For any design element that does \emph{not} vary across your plots,
 PlotTbl uses the first of the default ``Specs'' options for that design element.
@@ -438,6 +521,14 @@ In this example, all lines will be drawn without markers (as indicated by the bl
 By default, PlotTbl's first MarkerTypeSpec is the square, so the lines would be drawn with square
 markers if this option were not specified.
 
+\item After plotting, it is possible to change the titles shown on the subplots to any titles that
+you want.  See Demo.m for an example.
+
+\item PlotTbl repeats specifications if necessary.  For example, MATLAB defines 4 line types (see Appendix).
+If you want to distinguish more than 4 categories via line types, PlotTbl will recycle through the same ones.
+This is not ideal, but perhaps better than bombing.
+
+
 \end{itemize}
 
 \appendix
@@ -447,6 +538,12 @@ markers if this option were not specified.
 \section{Appendix: Complete List of Name-value Pairs}
 
 % Don't sort this list: Legend, XLabel, and YLabel go to the ends.
+\namevalue{AddDiagonal}{(takes no parameter)} \\  % NEWJEFF: Next 6 lines are new
+\hspace*{1cm} \namevalue{DiagonalStyle}{string line descriptor; default is 'k:'}
+\namevalue{AddXRef}{real number at which to add a vertical reference line} \\
+\hspace*{1cm} \namevalue{XRefStyle}{string line descriptor; default is 'k:'}
+\namevalue{AddYRef}{real number at which to add a horizontal reference line} \\
+\hspace*{1cm} \namevalue{YRefStyle}{string line descriptor; default is 'k:'}
 \namevalue{ColorCodeVar}{variable name} \\
 \namevalue{ColorLegend}{cell array of legend labels} \\
 \namevalue{ColorOrder}{'stable' or 'sorted'} \\
@@ -493,9 +590,9 @@ markers if this option were not specified.
 \namevalue{SubplotRowsXVars}{cell array of variable names} \\
 \namevalue{SubplotRowsYVars}{cell array of variable names} \\
 \namevalue{XLabel}{vector of subplot numbers} \\
-\namevalue{XLabelStr}{vector of subplot numbers} \\
+\namevalue{XLabelStr}{cell array of X labels for the subplots} \\
 \namevalue{YLabel}{vector of subplot numbers} \\
-\namevalue{YLabelStr}{vector of subplot numbers} \\
+\namevalue{YLabelStr}{cell array of Y labels for the subplots} \\
 
 Note: Name-value pairs of the form ``???CodeVar'' can be abbreviated as just ``???'',
 and those of the form ``???XVars'' or ``???YVars'' can be abbreviated as ``???X'' or ``???Y''.

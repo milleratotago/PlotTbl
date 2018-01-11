@@ -1,4 +1,7 @@
-function [subplothandles] = PlotTbl(Tbl,varargin)
+function [subplothandles, titles] = PlotTbl(Tbl,varargin)
+% Produce a plot from the data in Tbl, possibly consisting of subplots,
+% as requested by the name-value parameters in varargin.
+% Output the handles of the subplots and their titles.
 
 % The shape of subplothandles is determined by the number of SubplotRows & SubplotCols
 % even if SubplotReshape is used.
@@ -11,6 +14,8 @@ function [subplothandles] = PlotTbl(Tbl,varargin)
 [tfYlabel, varargin] = ExtractNameVali('YLabel',1:50,varargin);
 [YLabelStr, varargin]= ExtractNameVali('YLabelStr',{},varargin);
 [tfLegend, varargin] = ExtractNameVali('Legend',1,varargin);   % Legend only on first plot, by default.
+[CustomizeFn, varargin] = ExtractNameVali({'Custom','Customize','CustomFn'},0,varargin);   % A function to call after each subplot.
+[PassThruParms, varargin] = ExtractNameVali('PassThru',{},varargin);
 
 if numel(Reshape)==2
    SubplotNRows = Reshape(1);
@@ -20,7 +25,10 @@ else
    SubplotNCols = SubplotCols.NValues;
 end
 
+DoCustomize = isa(CustomizeFn,'function_handle');
+
 subplothandles = cell(SubplotRows.NValues,SubplotCols.NValues);
+titles = cell(SubplotRows.NValues,SubplotCols.NValues);
 iPlot = 0;
 for iRow=1:SubplotRows.NValues
     [Tbl4Rows, Lgd4Rows, PRsX, PRsY] = ptDescriptorInvoke(Tbl,SubplotRows,iRow);
@@ -46,13 +54,17 @@ for iRow=1:SubplotRows.NValues
             MaybeLabelStrs = {MaybeLabelStrs{:} 'YLabelStr' YLabelStr{iPlot}};
         end
 
-        SubplotTbl(Tbl4Cols,varargin2{:},'XLabel',ismember(iPlot,tfXlabel),'YLabel',ismember(iPlot,tfYlabel),'Legend',ismember(iPlot,tfLegend),MaybeLabelStrs{:});
+        SubplotTbl(Tbl4Cols,PassThruParms,varargin2{:},'XLabel',ismember(iPlot,tfXlabel),'YLabel',ismember(iPlot,tfYlabel), ...
+          'Legend',ismember(iPlot,tfLegend),MaybeLabelStrs{:});
+        if DoCustomize
+            CustomizeFn(iRow,iCol);
+        end
 
         stitle = [Lgd4Rows Lgd4Cols];
         while ( (strfind1st(stitle,',')==1) || (strfind1st(stitle,' ')==1) )
             stitle = stitle(2:end);  % strip off leading comma/space pairs (could be several)
         end
-        title(stitle);
+        titles{iRow,iCol} = title(stitle);
     end
 end
 end

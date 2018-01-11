@@ -14,6 +14,12 @@ function [OutTbl, Lgd, sX, sY] = ptDescriptorInvoke(InTbl,Descriptor,idx)
     else
         sY = '';
     end
+    if numel(Descriptor.XYVars)>0
+        assert(numel(sX)==0,'You are not allowed to specify both XVars and XYVars.');
+        assert(numel(sY)==0,'You are not allowed to specify both YVars and XYVars.');
+        sX = Descriptor.XYVars{idx,1};
+        sY = Descriptor.XYVars{idx,2};
+    end
     Lgd = '';
     if Descriptor.NValues>1
         if numel(Descriptor.LegendStrs)>0

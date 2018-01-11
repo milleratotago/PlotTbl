@@ -2,7 +2,7 @@
 
 % You must first install ExtractNameVal, available at https://github.com/milleratotago/ExtractNameVal
 
-% % Create a table of data that can be used to illustrate various plotting capabilities.
+% % Create tables of data that can be used to illustrate various plotting capabilities.
 % % These data are not intended to be realistic!
 % Ages = 2:2:12;
 % Genders = 1:2;        % Male/female
@@ -66,7 +66,7 @@ figure;  PlotTbl(AHWDat,'Age', ...
 figure('Position',[50 50 1000 700]);  PlotTbl(AHWDat, ...
     'SubplotColsXVars',{'AvgWeight' 'AvgHeight' 'Age'}, ...
     'SubplotRowsYVars',{'AvgWeight' 'AvgHeight' 'Age'}, ...
-    'SubplotCoLsLegend',{'' '' ''}, ...  % Set the "legend" labels to empty.
+    'SubplotColsLegend',{'' '' ''}, ...  % Set the "legend" labels to empty.
     'SubplotRowsLegend',{'' '' ''}, ...  % Set the "legend" labels to empty.
     'MarkerTypeCodeVar','Gender', ...
     'MarkerTypeLegend',{'Male' 'Female'}, ...
@@ -84,7 +84,7 @@ figure('Position',[50 50 1000 700]);  PlotTbl(AHWDat, ...
 figure('Position',[50 50 1000 700]);  PlotTbl(AHWDat, ...
     'SubplotColsXVars',{'AvgWeight' 'AvgHeight' 'Age'}, ...
     'SubplotRowsYVars',{'AvgWeight' 'AvgHeight' 'Age'}, ...
-    'SubplotCoLsLegend',{'' '' ''}, ...  % Set the "legend" labels to empty.
+    'SubplotColsLegend',{'' '' ''}, ...  % Set the "legend" labels to empty.
     'SubplotRowsLegend',{'' '' ''}, ...  % Set the "legend" labels to empty.
     'MarkerTypeCodeVar','Gender', ...
     'MarkerTypeLegend',{'Male' 'Female'}, ...
@@ -108,14 +108,15 @@ PlotTbl(AHWDat(AHWDat.Gender==2,:),'Age','AvgWeight','LineTypeCodeVar','National
 %% Example of calling SubplotTbl separately for each subplot, to get more control.
 figure;
 MaleDat = AHWDat(AHWDat.Gender==1,:);
+PassThruParms = {};  % Nothing special to pass through to plot command
 subplot(1,2,1);
-SubplotTbl(MaleDat,'Age','AvgWeight','ColorCodeVar','Nationality', ...
+SubplotTbl(MaleDat,PassThruParms,'Age','AvgWeight','ColorCodeVar','Nationality', ...
     'ColorLegend',{'Germany' 'France' 'Spain'});
 axis([0 20 50 100]);
 title('Weights of Males');
 FemaleDat = AHWDat(AHWDat.Gender==2,:);
 subplot(1,2,2);
-SubplotTbl(FemaleDat,'Age','AvgHeight','LineWidthCodeVar','Nationality', ...
+SubplotTbl(FemaleDat,PassThruParms,'Age','AvgHeight','LineWidthCodeVar','Nationality', ...
     'LineWidthLegend',{'Germany' 'France' 'Spain'});
 axis([0 20 110 160]);
 title('Heights of Females');
@@ -135,3 +136,69 @@ figure; PlotTbl(GendersReversed,'Age','AvgWeight','LineType','Nationality','SubP
 %% Illustration of SubplotReshape.
 % Make a separate figure for each of the six ages, but show them as 2 rows and 3 cols rather than 6 rows
 figure; PlotTbl(AHWDat,'Gender','AvgWeight','LineType','Nationality','SubPlotRows','Age','SubplotReshape',[2 3]);
+
+
+%% Demo of XYVars, reference lines, PassThru, CustomFn
+X1 = randn(50,1);
+Y1 = 1.3*X1 + randn(50,1)/5;
+X2 = randn(50,1);
+Y2 = 1.8*X2 + randn(50,1)/5;
+Random = table(X1,Y1,X2,Y2);
+%save('Random','Random');
+
+figure('Position',[50 50 1000 450]);  PlotTbl(Random, ...
+    'SubplotColsXYVars',{'X1' 'Y1'; 'X2' 'Y2'}, ...
+    'LineTypeSpecs',' ', ...   % Don't use any lines, just plot points like scatter
+    'MarkerSizeSpecs',7,...  % Increase marker size so it is easier to see
+    'AddXRef',0,'XRefStyle','g-','AddYRef',1,'AddDiagonal' ...
+    );
+
+%% PassThru example. MATLAB's plot command recognizes the MarkerFaceColor command,
+% which is not used in PlotTbl.  So, just "pass through" instructions to
+% the plot command if you want to change marker face color.
+figure('Position',[50 50 1000 450]);  PlotTbl(Random, ...
+    'MarkerTypeXYVars',{'X1' 'Y1'; 'X2' 'Y2'}, ...
+    'MarkerTypeLegend',{'X1/X2' 'Y1/Y2'}, ...
+    'LineTypeSpecs',' ', ...   % Don't use any lines, just plot points like scatter
+    'MarkerSizeSpecs',7,...  % Increase marker size so it is easier to see
+    'AddXRef',0,'AddYRef',1,'AddDiagonal', ...
+    'XLabel',[],'YLabel',[],'PassThru',{'MarkerFaceColor' 'r'} ...
+    );
+
+
+%% Example of using a customize function. Obviously you can do a lot more
+% with non-anonymous functions (e.g., check row & col, etc).
+AxLabels = @(row,col)( eval('xlabel(''X''); ylabel(''Y'');') );
+% Anonymous functions can have only one command, but you can use eval to get around that.
+
+figure('Position',[50 50 1000 450]);  PlotTbl(Random, ...
+    'MarkerTypeXYVars',{'X1' 'Y1'; 'X2' 'Y2'}, ...
+    'MarkerTypeLegend',{'X1/X2' 'Y1/Y2'}, ...
+    'LineTypeSpecs',' ', ...   % Don't use any lines, just plot points like scatter
+    'MarkerSizeSpecs',7,...  % Increase marker size so it is easier to see
+    'AddXRef',0,'AddYRef',1,'AddDiagonal', ...
+    'XLabel',[],'YLabel',[], 'CustomFn',AxLabels ...
+    );
+
+
+%% Example of modifying subplot titles:
+
+figure('Position',[50 50 1000 450]);
+
+[~, titles] = PlotTbl(Random, ...
+    'MarkerTypeXYVars',{'X1' 'Y1'; 'X2' 'Y2'}, ...
+    'MarkerTypeLegend',{'X1/X2' 'Y1/Y2'}, ...
+    'LineTypeSpecs',' ', ...   % Don't use any lines, just plot points like scatter
+    'MarkerSizeSpecs',7,...  % Increase marker size so it is easier to see
+    'AddXRef',0,'AddYRef',1,'AddDiagonal', ...
+    'XLabel',[],'YLabel',[], 'CustomFn',AxLabels ...
+    );
+[nrows,ncols] = size(titles);
+ictr = 0;
+for irow=1:nrows
+    for icol=1:ncols
+        ictr = ictr + 1;
+        titles{irow,icol}.String = ['Panel(' num2str(irow) ',' num2str(icol) '): ' titles{irow,icol}.String];
+    end
+end
+
