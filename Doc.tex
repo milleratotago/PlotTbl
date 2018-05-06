@@ -280,6 +280,21 @@ line widths, marker sizes, and subplots as described in the following subsection
 \designelement{Color}{color}{string list of color specifications}
 {'rgbk'}{the first line will be red, the second green, the third blue, and the fourth black.}
 
+{\bf Specifying your own RGB values.} Alternatively, you may specify colors like this:
+
+Name-value pair: \namevalue{ColorSpecs}{cell array of RGB color specifications}
+
+This name-value pair indicates that you want to replace PlotTbl's default set of color
+specifications with a new set.
+Use MATLAB's standard RGB color specifications in whatever order you prefer.
+Your colors will be used in order by values of the CodeVar
+or the order of the variables listed for ColorXVars or ColorYVars.
+
+\example{PlotTbl(...,'ColorSpecs',\{[0.4 0.4 0.4], [0.6 0.6 0.6], [0.8 0.8 0.8]\})}
+
+In this example the first line will be the darkest, the second medium, and the third lightest.
+
+
 \designelement{LineWidth}{line width}{vector of line widths}
 {[3 5 8 12]}{the first line will have width 3, the next width 5, etc.}
 
@@ -547,7 +562,7 @@ This is not ideal, but perhaps better than bombing.
 \namevalue{ColorCodeVar}{variable name} \\
 \namevalue{ColorLegend}{cell array of legend labels} \\
 \namevalue{ColorOrder}{'stable' or 'sorted'} \\
-\namevalue{ColorSpecs}{string list of colors} \\
+\namevalue{ColorSpecs}{string list of colors, or cell array of RGB triples} \\
 \namevalue{ColorXVars}{cell array of variable names} \\
 \namevalue{ColorYVars}{cell array of variable names} \\
 \namevalue{Legend}{vector of subplot numbers where you want the legend} \\

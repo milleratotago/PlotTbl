@@ -456,6 +456,20 @@ Example: *PlotTbl(...,'ColorSpecs','rgbk')*
 In this example the first line will be red, the second green, the third
 blue, and the fourth black.
 
+Specifying your own RGB values. Alternatively, you may specify colors like this:
+
+Name-value pair: *ColorSpecs - cell arrary of RGB color specifications*
+
+This name-value pair indicates that you want to replace PlotTbl's default set of color
+specifications with a new set.
+Use MATLAB's standard RGB color specifications in whatever order you prefer.
+Your colors will be used in order by values of the CodeVar
+or the order of the variables listed for ColorXVars or ColorYVars.
+
+Example: *PlotTbl(...,'ColorSpecs',{[0.4 0.4 0.4], [0.6 0.6 0.6], [0.8 0.8 0.8]})*
+
+In this example the first line will be the darkest, the second medium, and the third lightest.
+
 Name-value pair: *ColorOrder --- 'stable' or 'sorted'*
 
 This name-value pair is only applicable when used in conjunction with
