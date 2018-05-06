@@ -202,3 +202,20 @@ for irow=1:nrows
     end
 end
 
+%% An illustration of how to specify your own RGB values for colors.
+% Like an earlier example, this makes separate plots for AvgWeight and AvgHeight, but put all six combinations
+% of nationality and gender on each plot.  This time associate nationality with Color and use
+% any of your own preferred RGB values for each nationality. This is done by specifying a cell array
+% of RGB values for ColorSpec, as shown below.  In this example, gray scale is varied.
+figure;  PlotTbl(AHWDat,'Age', ...
+    'SubplotRowsYVars',{'AvgWeight' 'AvgHeight'}, ...
+    'SubplotRowsLegend',{'' ''}, ...  % Set the "legend" labels to empty for these two variables.
+    'MarkerTypeCodeVar','Gender', ...
+    'MarkerTypeLegend',{'Male' 'Female'}, ... % Set the "legend" labels for the two values of Gender.
+    'ColorCodeVar','Nationality', ...
+    'ColorSpecs',{[0.4 0.4 0.4], [0.6 0.6 0.6], [0.8 0.8 0.8]}, ...
+    'ColorLegend',{'Germany' 'France' 'Spain'}, ...
+    'XLabel',[2], ...  % Just put X axis labels on these subplots (as MATLAB numbers them).
+    'Legend',[1]);  % I guess one legend is enough, but you could list several here if you wanted them.
+
+
