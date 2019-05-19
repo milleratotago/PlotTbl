@@ -14,8 +14,12 @@ function [subplothandles, titles] = PlotTbl(Tbl,varargin)
 [tfYlabel, varargin] = ExtractNameVali('YLabel',1:50,varargin);
 [YLabelStr, varargin]= ExtractNameVali('YLabelStr',{},varargin);
 [tfLegend, varargin] = ExtractNameVali('Legend',1,varargin);   % Legend only on first plot, by default.
-[CustomizeFn, varargin] = ExtractNameVali({'Custom','Customize','CustomFn'},0,varargin);   % A function to call after each subplot.
+[CustomizeFn, varargin] = ExtractNameVali({'Custom','Customize','CustomFn'},{},varargin);   % A cell array of functions to call after each subplot.
+CustomizeFn = EnsureCell(CustomizeFn);
 [PassThruParms, varargin] = ExtractNameVali('PassThru',{},varargin);
+
+XLabelStr = EnsureCell(XLabelStr);
+YLabelStr = EnsureCell(YLabelStr);
 
 if numel(Reshape)==2
    SubplotNRows = Reshape(1);
@@ -24,8 +28,6 @@ else
    SubplotNRows = SubplotRows.NValues;
    SubplotNCols = SubplotCols.NValues;
 end
-
-DoCustomize = isa(CustomizeFn,'function_handle');
 
 subplothandles = cell(SubplotRows.NValues,SubplotCols.NValues);
 titles = cell(SubplotRows.NValues,SubplotCols.NValues);
@@ -56,8 +58,9 @@ for iRow=1:SubplotRows.NValues
 
         SubplotTbl(Tbl4Cols,PassThruParms,varargin2{:},'XLabel',ismember(iPlot,tfXlabel),'YLabel',ismember(iPlot,tfYlabel), ...
           'Legend',ismember(iPlot,tfLegend),MaybeLabelStrs{:});
-        if DoCustomize
-            CustomizeFn(iRow,iCol);
+        for iCustomize=1:numel(CustomizeFn)
+            thisfn = CustomizeFn{iCustomize};
+            thisfn(iRow,iCol);
         end
 
         stitle = [Lgd4Rows Lgd4Cols];

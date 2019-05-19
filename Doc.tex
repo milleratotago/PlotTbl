@@ -482,14 +482,33 @@ In this example, PlotTbl will display markers for the 1st, 5th, and 10th data po
 For further control over the plots, you can pass a function for PlotTbl to
 call after each subplot is plotted.
 
+This function is called with the subplot row and column numbers as arguments,
+so you can do different things for different subplots if you want.
+
 Name-value pair: \namevalue{Customize}{YourFunctionName}
+
+For example, you could define a function to set the horizontal and vertical
+axes to the ranges of (0,1):
+
+\example{MyCustomFn = @(x,y)(axis([0 1 0 1])); \% Define this custom function before calling PlotTbl}
+
+Then you would tell PlotTbl to call it after each subplot like this:
 
 \example{PlotTbl(...,'Customize',MyCustomFn)}
 
-In this example, you would supply a function called ``MyCustomFn'' that would
-do something for each plot (e.g., set log axes).
-This function is called with the subplot row and column numbers as arguments,
-so you can do different things for different subplots if you want.
+Alternatively, the parameter following 'Customize' can be a cell array of function handles
+if you want to call several functions to customize each graph.
+For example, here are three functions to set the axis ranges and to specify the tic values and for the X axis:
+
+% NEWJEFF: Maybe I need to add specific commands to control xtics and xticklabels?
+\example{MyCustomAxFn = @(x,y)(axis([0.5 2.5 60 100]));}
+\example{MyCustomXTicFn = @(x,y)(xticks([1 2]));}
+\example{MyCustomXTicLblFn = @(x,y)(xticklabels({'far', 'near'}));}
+
+Then you would tell PlotTbl to call these three functions after each subplot by including them
+in a cell array, like this:
+
+\example{PlotTbl(...,'Customize',{MyCustomAxFn,MyCustomXTicFn,MyCustomXTicLblFn,})}
 
 Finally, even more fine-grained control can be achieved by calling the function SubplotTbl directly.
 SubplotTbl recognizes nearly all of the same formatting commands as PlotTbl

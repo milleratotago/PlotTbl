@@ -1146,17 +1146,22 @@ In this example, PlotTbl will display markers for the 1st, 5th, and 10th data po
 For further control over the plots, you can pass a function for PlotTbl to
 call after each subplot is plotted.
 
+This function is called with the subplot row and column numbers as arguments,
+so you can do different things for different subplots if you want.
+
 <div class="p"><!----></div>
 Name-value pair: <i>Customize - YourFunctionName</i>
 
-<div class="p"><!----></div>
-Example: <i>PlotTbl(...,'Customize',MyCustomFn)</i>
+For example, you could define a function to set the horizontal and vertical
+axes to the ranges of (0,1):
 
 <div class="p"><!----></div>
-In this example, you would supply a function called "MyCustomFn" that would
-do something for each plot (e.g., set log axes).
-This function is called with the subplot row and column numbers as arguments,
-so you can do different things for different subplots if you want.
+Example: <i>MyCustomFn = @(x,y)(axis([0 1 0 1])); % Define this custom function before calling PlotTbl</i>
+
+Then you would tell PlotTbl to call it after each subplot like this:
+
+<div class="p"><!----></div>
+Example: <i>PlotTbl(...,'Customize',MyCustomFn)</i>
 
 <div class="p"><!----></div>
 Finally, even more fine-grained control can be achieved by calling the function SubplotTbl directly.
@@ -1308,7 +1313,7 @@ In PlotTbl's default order:
 <div class="p"><!----></div>
 </li>
 
-<li> '-': Dashed line
+<li> '--': Dashed line
 <div class="p"><!----></div>
 </li>
 

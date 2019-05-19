@@ -1,7 +1,7 @@
 function [Descriptor, ArgList] = ptMultiExtract(Tbl,s,DefaultSpecs,ArgList)
 [Descriptor.CodeVar, ArgList] = ExtractNameVali({[s 'CodeVar'] s},'',ArgList);   % Used for partitioning data set
-[Descriptor.XVars,ArgList] = ExtractNameVali({[s 'XVars'] [s 'X']},{},ArgList);  % Cell array of variable names, used for  ...
-[Descriptor.YVars,ArgList] = ExtractNameVali({[s 'YVars'] [s 'Y']},{},ArgList);  % selecting variables to be plotted on X/Y axis
+[Descriptor.XVars,ArgList] = ExtractNameVali({[s 'XVars'] [s 'XVar'] [s 'X']},{},ArgList);  % Cell array of variable names, used for  ...
+[Descriptor.YVars,ArgList] = ExtractNameVali({[s 'YVars'] [s 'YVar'] [s 'Y']},{},ArgList);  % selecting variables to be plotted on X/Y axis
 [Descriptor.XYVars,ArgList] = ExtractNameVali({[s 'XYVars'] [s 'XY']},{},ArgList);  % selecting variables to be plotted on X/Y axis
 [Descriptor.Specs, ArgList] = ExtractNameVali([s 'Specs'],DefaultSpecs,ArgList);
 [Descriptor.Order, ArgList] = ExtractNameVali([s 'Order'],'stable',ArgList);

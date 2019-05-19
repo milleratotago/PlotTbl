@@ -71,15 +71,7 @@ elseif numel(varargin)==1
     end
 end
 
-% Halt if there are any unprocessed input arguments:
-if numel(varargin)>0
-    disp('These arguments could not be processed:');
-    for i=1:numel(varargin)
-        disp(varargin{i});
-    end
-    assert(false,'Must halt');
-end
-%assert(numel(varargin)==0,['Unprocessed arguments: ' strjoin(varargin)]);
+EnsureEmpty(varargin); % Halt if there are any unprocessed input arguments:
 
 if numel(sXlabel) == 0
     sXlabel = [BasesX LineType.XLabelList MarkerType.XLabelList Color.XLabelList LineWidth.XLabelList MarkerSize.XLabelList];

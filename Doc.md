@@ -931,14 +931,19 @@ data points.
 For further control over the plots, you can pass a function for PlotTbl
 to call after each subplot is plotted.
 
+This function is called with the subplot row and column numbers as arguments,
+so you can do different things for different subplots if you want.
+
 Name-value pair: *Customize --- YourFunctionName*
 
-Example: *PlotTbl(...,'Customize',MyCustomFn)*
+For example, you could define a function to set the horizontal and vertical
+axes to the ranges of (0,1):
 
-In this example, you would supply a function called "MyCustomFn" that
-would do something for each plot (e.g., set log axes). This function is
-called with the subplot row and column numbers as arguments, so you can
-do different things for different subplots if you want.
+Example: *MyCustomFn = @(x,y)(axis([0 1 0 1])); % Define this custom function before calling PlotTbl*
+
+Then you would tell PlotTbl to call it after each subplot like this:
+
+Example: *PlotTbl(...,'Customize',MyCustomFn)*
 
 Finally, even more fine-grained control can be achieved by calling the
 function SubplotTbl directly. SubplotTbl recognizes nearly all of the
