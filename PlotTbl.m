@@ -8,7 +8,10 @@ function [subplothandles, titles] = PlotTbl(Tbl,varargin)
 
 [SubplotRows, varargin] = ptMultiExtract(Tbl,'SubplotRows',1:50,varargin);  % Have many default specs so that NValues will be large for the
 [SubplotCols, varargin] = ptMultiExtract(Tbl,'SubplotCols',1:50,varargin);  % assert(Descriptor.NValues<=NSpecs,... at the end of ptMultiExtract
-[Reshape, varargin] = ExtractNameVali('SubplotReshape',[],varargin);
+% NEWJEFF: ptMultiExtract does not handle multiple label identifiers: there is a problem with Legend
+% [SubplotRows, varargin] = ptMultiExtract(Tbl,{'SubplotRows' 'SubplotRow' 'SubplotsRow' 'SubplotsRows' 'PanelRows' 'PanelRow' 'PanelsRow'},1:50,varargin);  % Have many default specs so that NValues will be large for the
+% [SubplotCols, varargin] = ptMultiExtract(Tbl,{'SubplotCols' 'SubplotCol' 'SubplotsCol' 'SubplotsCols' 'PanelCols' 'PanelCol' 'PanelsCol'},1:50,varargin);  % assert(Descriptor.NValues<=NSpecs,... at the end of ptMultiExtract
+[Reshape, varargin] = ExtractNameVali({'SubplotReshape' 'SubplotsReshape' 'PanelReshape' 'PanelsReshape'},[],varargin);
 [tfXlabel, varargin] = ExtractNameVali('XLabel',1:50,varargin);
 [XLabelStr, varargin]= ExtractNameVali('XLabelStr',{},varargin);
 [tfYlabel, varargin] = ExtractNameVali('YLabel',1:50,varargin);
@@ -58,9 +61,11 @@ for iRow=1:SubplotRows.NValues
 
         SubplotTbl(Tbl4Cols,PassThruParms,varargin2{:},'XLabel',ismember(iPlot,tfXlabel),'YLabel',ismember(iPlot,tfYlabel), ...
           'Legend',ismember(iPlot,tfLegend),MaybeLabelStrs{:});
+        % Compute jRow,jCol to reflect position after reshaping, if any:
+        [jCol, jRow] = ind2sub([SubplotNCols, SubplotNRows],iPlot);  % subplot counts across rather than down
         for iCustomize=1:numel(CustomizeFn)
             thisfn = CustomizeFn{iCustomize};
-            thisfn(iRow,iCol);
+            thisfn(jRow,jCol);
         end
 
         stitle = [Lgd4Rows Lgd4Cols];

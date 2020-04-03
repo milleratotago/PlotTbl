@@ -1,5 +1,8 @@
 \documentclass{article}
 
+% NewJeff: I added ErrorBar*.m but there is no demo, no example, and no documentation--
+% just a few comments in the ErrorBarManager.
+
 \usepackage[parfill]{parskip}  %  Include a blank line between paragraphs.
 
 \sloppy
@@ -573,11 +576,11 @@ This is not ideal, but perhaps better than bombing.
 
 % Don't sort this list: Legend, XLabel, and YLabel go to the ends.
 \namevalue{AddDiagonal}{(takes no parameter)} \\  % NEWJEFF: Next 6 lines are new
-\hspace*{1cm} \namevalue{DiagonalStyle}{string line descriptor; default is 'k:'}
+\hspace*{1cm} \namevalue{DiagonalStyle}{string line descriptor; default is 'k:'} \\
 \namevalue{AddXRef}{real number at which to add a vertical reference line} \\
-\hspace*{1cm} \namevalue{XRefStyle}{string line descriptor; default is 'k:'}
+\hspace*{1cm} \namevalue{XRefStyle}{string line descriptor; default is 'k:'} \\
 \namevalue{AddYRef}{real number at which to add a horizontal reference line} \\
-\hspace*{1cm} \namevalue{YRefStyle}{string line descriptor; default is 'k:'}
+\hspace*{1cm} \namevalue{YRefStyle}{string line descriptor; default is 'k:'} \\
 \namevalue{ColorCodeVar}{variable name} \\
 \namevalue{ColorLegend}{cell array of legend labels} \\
 \namevalue{ColorOrder}{'stable' or 'sorted'} \\
@@ -637,12 +640,14 @@ In PlotTbl's default order:
 
 \begin{itemize}
 \item '-': Solid line
-\item '--': Dashed line
+\item '-{}-': Dashed line  % Note the curly brackets to prevent conversion to a single long dash.
 \item ':': Dotted line
 \item '-.': Dash-dot line
 \end{itemize}
 
 Use 'none' or ' ' to omit the line.
+% NEWJEFF: For additional options, see the FileExchange contribution dashLine.
+% But I am not sure how these could be used in PlotTbl.
 
 \section{Appendix: Marker Types in MATLAB}
 
