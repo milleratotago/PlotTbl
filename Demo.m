@@ -1,6 +1,8 @@
 % A script to demonstrate the use of PlotTbl.
 
 % You must first install ExtractNameVal, available at https://github.com/milleratotago/ExtractNameVal
+% For the very last graph, you also need EnsureCell,
+%    available at https://github.com/milleratotago/Cupid/blob/master/EnsureCell.m
 
 % % Create tables of data that can be used to illustrate various plotting capabilities.
 % % These data are not intended to be realistic!
@@ -34,7 +36,8 @@ figure;  PlotTbl(AHWDat,'Age', ...
     'SubplotColsLegend',{'Germany' 'France' 'Spain'});
 
 %% Further improve the previous graph (IMHO) by getting rid of redundant
-%  axis labels and legends
+%  axis labels and legends.  See the demo of CellArModify for another
+%  version of this graph that provides even more control.
 figure;  PlotTbl(AHWDat,'Age', ...
     'SubplotRowsYVars',{'AvgWeight' 'AvgHeight'}, ...
     'SubplotRowsLegend',{'' ''}, ...  % Set the "legend" labels to empty for these two variables.
@@ -217,5 +220,59 @@ figure;  PlotTbl(AHWDat,'Age', ...
     'ColorLegend',{'Germany' 'France' 'Spain'}, ...
     'XLabel',[2], ...  % Just put X axis labels on these subplots (as MATLAB numbers them).
     'Legend',[1]);  % I guess one legend is enough, but you could list several here if you wanted them.
+
+
+%% Illustration of using CellArModify
+
+figure;
+% Grab the subplot handles returned by PlotTbl
+sphs = PlotTbl(AHWDat,'Age', ...
+    'SubplotRowsYVars',{'AvgWeight' 'AvgHeight'}, ...
+    'SubplotRowsLegend',{'' ''}, ...  % Set the "legend" labels to empty for these two variables.
+    'LineTypeCodeVar','Gender', ...
+    'LineTypeLegend',{'Male' 'Female'}, ... % Set the "legend" labels for the two values of Gender.
+    'SubplotColsCodeVar','Nationality', ...
+    'SubplotColsLegend',{'Germany' 'France' 'Spain'}, ...
+    'Legend',[1]);  % I guess one legend is enough, but you could list several here if you wanted them.
+
+% Make the panels taller and wider
+Stretch = [1.2 1.2];  % Expansion factors in horizontal and vertical dimensions
+Shift = [0 0];  % Offsets in horizontal and vertical dimensions
+sphs = subplotResize(sphs,Stretch,Shift);
+
+% Adjust the Y axis limits and ticks, separately for rows 1 & 2
+CellArModify(sphs(1,:),'YLim',[55 125]);  % Set row 1 Y limits & ticks
+CellArModify(sphs(1,:),'YTick',60:20:120);
+CellArModify(sphs(2,:),'YLim',[105 155]);  % Set row 2 Y limits & ticks
+CellArModify(sphs(2,:),'YTick',110:10:150);
+
+% Remove the X axis info from the top row
+CellArModify(sphs(1:end-1,:),'XLabel',[]);
+CellArModify(sphs(1:end-1,:),'XTickLabel',[]);
+
+% Remove the Y axis info from the 2nd and 3rd columns:
+CellArModify(sphs(:,2:end),{'YLabel' 'String'},[]);
+CellArModify(sphs(:,2:end),'YTickLabel',[]);
+
+% Move the panel titles down into the panels
+[nRows, nCols] = size(sphs);
+for iRow=1:nRows
+    for iCol=1:nCols
+        ax = sphs{iRow,iCol};
+        axTitleDecrement = 0.12 * (ax.YLim(2) - ax.YLim(1));
+        ax.Title.Position(2) = ax.Title.Position(2) - axTitleDecrement;
+        sphs{iRow,iCol} = ax;
+    end
+end
+
+% Change the title font size and revert to normal rather than boldface
+CellArModify(sphs,{'Title' 'FontSize'},12);
+CellArModify(sphs,{'Title' 'FontWeight'},'normal');
+
+% Add grid lines
+CellArModify(sphs,'XGrid','on');
+CellArModify(sphs,'YGrid','on');
+% CellArModify(sphs,'XMinorGrid','on');
+% CellArModify(sphs,'YMinorGrid','on');
 
 

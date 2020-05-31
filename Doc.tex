@@ -273,7 +273,18 @@ All seven are controlled with basically the same set of options.
 \designelement{LineType}{line type}{cell array of line type specifications}
 {\{':' '-.'\}}{the first line will be dotted and the second line will be dash/dot.}
 
-Note: Name-value pairs analogous to LineTypeCodeVar, LineTypeXVars, LineTypeYVars,
+{\bf Note 1:} It is sometimes frustrating that MATLAB only provides four line types.
+To work around this limitation, PlotTbl defines some additional line types that
+have the same style as the built-in line types (i.e., solid, dashed, etc)
+but vary in line thickness.
+Specifically, these added line types are specified by strings just like
+the additional ones but with the character '2', '3', or '4' added on at the end,
+with thickness increasing according to the size of this number.
+These added line types are used by default in PlotTbl, so if you need
+(say) six line types you will get regular MATLAB ones for the first four
+and then you will get thicker versions for the next two.
+
+{\bf Note 2:} Name-value pairs analogous to LineTypeCodeVar, LineTypeXVars, LineTypeYVars,
 LineTypeSpecs, and LineTypeLegend, are available for controlling marker types, colors,
 line widths, marker sizes, and subplots as described in the following subsections.
 
@@ -565,6 +576,12 @@ you want.  See Demo.m for an example.
 If you want to distinguish more than 4 categories via line types, PlotTbl will recycle through the same ones.
 This is not ideal, but perhaps better than bombing.
 
+\item MATLAB leaves a lot of space between subplots---often, too much for my taste.
+The function 'subplotResize' can be used to stretch the subplots, horizontally and vertically,
+into the space that MATLAB would normally leave between them.
+
+\item The function CellArModify often provides a convenient way to modify the properties of
+all subplots.  See Demo.m for an example.
 
 \end{itemize}
 

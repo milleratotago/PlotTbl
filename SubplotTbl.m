@@ -8,7 +8,8 @@ function [] = SubplotTbl(Tbl,PassThruParms,varargin)
 % ptMultiExtract gets features of individual lines, including variables that determine line characteristics.
 % Note that the xxxTypeDefault values repeat three times so that there will be plenty of options.
 
-LineTypeDefault = {'-','--',':','-.','-','--',':','-.','-','--',':','-.'};
+% Cluge here to make extra line types.  Added integer k increases width by the factor of k.
+LineTypeDefault = {'-','--',':','-.','-2','--2',':2','-.2','-3','--3',':3','-.3'};
 [LineType, varargin] = ptMultiExtract(Tbl,'LineType',LineTypeDefault,varargin);
 
 MarkerTypeDefault = 'sod^v+x*.><phsod^v+x*.><phsod^v+x*.><ph';
@@ -107,13 +108,27 @@ Tbl = sortrows(Tbl,thissX);
 thisx = Tbl4MS.(thissX);
 thisy = Tbl4MS.(thissY);
 thislegendstr = [Lgd4LT Lgd4MT Lgd4C Lgd4LW Lgd4MS];
+% Cluge to handle increasing line width for some line specs
+thisLineType = LineType.Specs{iLT};
+thisLineWidth = LineWidth.Specs(iLW);
+switch thisLineType(end)
+    case '2'
+        thisLineWidth = 1.5*thisLineWidth;
+        thisLineType = thisLineType(1:end-1);
+    case '3'
+        thisLineWidth = 2*thisLineWidth;
+        thisLineType = thisLineType(1:end-1);
+    case '4'
+        thisLineWidth = 2.5*thisLineWidth;
+        thisLineType = thisLineType(1:end-1);
+end
 if ischar(Color.Specs(iC))
-    plot(thisx,thisy,[LineType.Specs{iLT} MarkerType.Specs(iMT) Color.Specs(iC)], ...
-      'LineWidth',LineWidth.Specs(iLW),'MarkerSize',MarkerSize.Specs(iMS),'DisplayName',thislegendstr(3:end), ...
+    plot(thisx,thisy,[thisLineType MarkerType.Specs(iMT) Color.Specs(iC)], ...
+      'LineWidth',thisLineWidth,'MarkerSize',MarkerSize.Specs(iMS),'DisplayName',thislegendstr(3:end), ...
       PassThruParms{:});  % 3:end drops initial ', '
 else % Color Specs are cell arrays of [R G B]
-    plot(thisx,thisy,[LineType.Specs{iLT} MarkerType.Specs(iMT)],'Color',Color.Specs{iC}, ...
-      'LineWidth',LineWidth.Specs(iLW),'MarkerSize',MarkerSize.Specs(iMS),'DisplayName',thislegendstr(3:end), ...
+    plot(thisx,thisy,[thisLineType MarkerType.Specs(iMT)],'Color',Color.Specs{iC}, ...
+      'LineWidth',thisLineWidth,'MarkerSize',MarkerSize.Specs(iMS),'DisplayName',thislegendstr(3:end), ...
       PassThruParms{:});  % 3:end drops initial ', '
 end
 Xmin = min([Xmin; thisx]);

@@ -3,6 +3,7 @@ function PanelLbl(xCoord,yCoord,sLabel,varargin)
     % where the coordinates are specified 0-1, 0-1
     % as proportions of the distance from the bottom
     % to the top of the axis limits.
+    % Adjust size with varargin = 'Fontsize',12
     text(xCoord,yCoord,sLabel,'Units','normalized',varargin{:});
 %   return
 %   xlims = xlim;

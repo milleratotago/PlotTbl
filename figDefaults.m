@@ -26,6 +26,8 @@ function a = figDefaults
     set(groot,'defaultLegendInterpreter','latex');
     set(groot,'defaultTextInterpreter','latex');
 
+a.OneByOnePanelCoords = [100 100 375 300];
+a.OneByOnePanelPaper = [4 4];   % Size, in inches, of the figure plotted on paper.
 a.TwoByTwoPanelCoords = [100 100 750 600];
 a.TwoByTwoPanelPaper = [8 8];   % Size, in inches, of the figure plotted on paper.
 a.TwoByOnePanelCoords = [100 100 375 600];
