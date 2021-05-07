@@ -19,6 +19,7 @@ function [subplothandles, titles] = PlotTbl(Tbl,varargin)
 [tfLegend, varargin] = ExtractNameVali('Legend',1,varargin);   % Legend only on first plot, by default.
 [CustomizeFn, varargin] = ExtractNameVali({'Custom','Customize','CustomFn'},{},varargin);   % A cell array of functions to call after each subplot.
 CustomizeFn = EnsureCell(CustomizeFn);
+[NoSubplot, varargin] = ExtractNamei('NoSubplot',varargin);   % Skip call to subplot so you can use this with subplots handled externally.
 [PassThruParms, varargin] = ExtractNameVali('PassThru',{},varargin);
 
 XLabelStr = EnsureCell(XLabelStr);
@@ -40,7 +41,9 @@ for iRow=1:SubplotRows.NValues
     for iCol=1:SubplotCols.NValues
         [Tbl4Cols, Lgd4Cols, PCsX, PCsY] = ptDescriptorInvoke(Tbl4Rows,SubplotCols,iCol);
         iPlot = iPlot + 1;
-        subplothandles{iRow,iCol} = subplot(SubplotNRows,SubplotNCols,iPlot);
+        if ~NoSubplot
+            subplothandles{iRow,iCol} = subplot(SubplotNRows,SubplotNCols,iPlot);
+        end
         varargin2 = varargin;
 
         % Prepend names of X & Y variables to the argument list, as necessary:

@@ -7,7 +7,7 @@ function SP = subplotResize(SP,Stretch,varargin)
     %  the lower left corner of the subplot. For example, passing Offset = [0.1 -0.2] as the varargin
     %  would move the lower left corner of the stretched subplot 0.1 units to the right and 0.2 units down
     %
-    % Here are 2 examples of how to use this function:
+    % Here are examples of how to use this function:
     %
     % 1. Enlarge subplot leaving the lower left corner in place:
     %   hsp1 = subplot(2,2,1);   % get a handle for the subplot with MATLAB's regular command.
@@ -21,7 +21,23 @@ function SP = subplotResize(SP,Stretch,varargin)
     %                                                     % 0.1 units to the right and 0.2 units down
     %   plot(x,y);  % use any of the normal plot commands, set axis limits, legends, etc
     %
-    SP = EnsureCell(SP);
+    % 3. Example using PlotTbl:
+    %       subplothandles = PlotTbl(tbl,'X','Y', ...
+    %       subplothandles = subplotResize(subplothandles,Stretch,Shift);
+    %
+    % NOTE: If SP is a cell array with just one cell, this function does nothing.
+    %  This is so you can call it with all PlotTbl outputs regardless of how many subplots.
+    cellInput = iscell(SP);  % Find out if input was a cell so we can return the same type of output.
+    if cellInput
+        [nRows, nCols] = size(SP);
+        if nRows*nCols == 1
+            return;
+        end
+    else
+        SP = {SP};
+        nRows = 1;
+        nCols = 1;
+    end
     horizStretch = Stretch(1);
     if numel(Stretch)>1
         vertStretch = Stretch(2);
@@ -35,16 +51,25 @@ function SP = subplotResize(SP,Stretch,varargin)
         horizShift = 0;
         vertShift = 0;
     end
-    for iCell = 1:numel(SP)
-        oldPosition = SP{iCell}.Position;
-        oldX = oldPosition(1);
-        oldY = oldPosition(2);
-        oldWid = oldPosition(3);
-        oldHt = oldPosition(4);
-        newHt = oldHt * vertStretch;
-        newWid = oldWid * horizStretch;
-        newX = oldX + horizShift;
-        newY = oldY + vertShift;
-        SP{iCell}.Position = [newX newY newWid newHt];
+    for iRow = 1:nRows
+        for iCol = 1:nCols
+            oldPosition = SP{iRow,iCol}.Position;
+            oldX = oldPosition(1);
+            oldY = oldPosition(2);
+            oldWid = oldPosition(3);
+            oldHt = oldPosition(4);
+            newHt = oldHt * vertStretch;
+            newWid = oldWid * horizStretch;
+            newX = oldX + horizShift;
+            if ( (nRows==1) || (iRow<nRows) )
+                newY = oldY;
+            else
+                newY = oldY + vertShift;  % Do not shift 1st row of several
+            end
+            SP{iRow,iCol}.Position = [newX newY newWid newHt];
+        end
+    end
+    if ~cellInput
+        SP = SP{1};
     end
 end

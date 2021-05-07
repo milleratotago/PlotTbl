@@ -90,6 +90,7 @@ classdef ErrorBarManager < handle
                     obj.PanelBars{iPanelRowNum,iPanelColNum}(iBar).Draw;
                 end
             catch
+                    error('Request error bar info not found.');
                 % Nothing needed.
                 % This try can fail if you try to draw bars for a panel
                 % outside the (Row,Col) range of panels for which bars were defined.
