@@ -6,6 +6,8 @@ function car = CellArModify(car,sProperty,Value)
     %    that will indicate the property to be changed.  For example, to change the Title.FontSize property
     %    car{:}.Title.FontSize, sProperty would be the cell array:  {'Title' 'FontSize'}
     % Value is the new value to be given to the property.
+    % Examples:
+    % hndlAr = CellArModify(hndlAr,{'XLabel' 'String'},'CDF(RT)');  % equiv to xlabel('CDF(RT)') for all panels.
     sProperty = EnsureCell(sProperty);
     Depth = numel(sProperty);
     for i=1:numel(car)
