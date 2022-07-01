@@ -15,12 +15,12 @@ function car = CellArModify(car,sProperty,Value)
     Depth = numel(sProperty);
     cellValues = iscell(Value);
     if cellValues
-        ncellValues = numel(Value);
-        assert(ncellValues == 1 || ncellValues == numel(car),'Values must have one cell per handle.');
+        nnewcellValues = numel(Value);
+        assert(nnewcellValues == 1 || nnewcellValues == numel(car),'Values must have one cell per handle.');
     end
     for i=1:numel(car)
         if cellValues
-            if ncellValues == 1
+            if nnewcellValues == 1
                 newValue = Value{1};
             else
                 newValue = Value{i};

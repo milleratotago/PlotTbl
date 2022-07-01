@@ -41,6 +41,9 @@ a.TwoByOnePanelPaper = [4 8];   % Size, in inches, of the figure plotted on pape
 a.ThreeByThreePanelCoords = [100 100 750 800];
 a.ThreeByThreePanelPaper = [8 8];   % Size, in inches, of the figure plotted on paper.
 
+a.ThreeByTwoPanelCoords = [100 100 750 800];
+a.ThreeByTwoPanelPaper = [8 8];   % Size, in inches, of the figure plotted on paper.
+
 % Same as 2x2
 a.OneByOneBigPanelCoords = [100 100 750 600];
 a.OneByOneBigPanelPaper = [8 8];   % Size, in inches, of the figure plotted on paper.
